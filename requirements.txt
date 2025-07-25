@@ -1,3 +1,5 @@
+pip>=25.1.1
+wheel
 dash==2.11.1
 dash_bootstrap_components==1.4.2
 dash_daq==0.5.0
