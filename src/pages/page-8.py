@@ -817,49 +817,61 @@ def calculat_score_and_record_answers(data):
 #   return sentence
 
 @callback(
-    Output('text_report_1', 'children'),
+    Output('text_report1', 'children'),
     Input('record_answers', 'data')
     )
 
 def display_personalized_text1(data):
-    
-    risk = risk_dict.get(data['zipcode'], 'Unknown')
-    no_anti_ticks = ['no', 'yes', "I don't remember"]
-    
-    ###############################################################################
-    # 1 The potential presence of blacklegged ticks in your environment
-    ###############################################################################
-    
     sentence = ''
     
-    #Postal Code & residency feedback
-    if data['which_residence'] == 'Primary' or data['which_residence'] == 'Secondary':
-        sentence += f"""* The region of your {data['which_residence']} residence has a **{risk}** level risk"""
-    else :
-        sentence += f"""* The region of your residence has a **{risk}** level risk"""
     
-    sentence += '\n\n'
+    try :
+        risk = risk_dict.get(data['zipcode'], 'Unknown')
+        no_anti_ticks = ['no', 'yes', "I don't remember"]
+        
+        ###############################################################################
+        # 1 The potential presence of blacklegged ticks in your environment
+        ###############################################################################
+        
+        #Postal Code & residency feedback
+        if data['which_residence'] == 'Primary' or data['which_residence'] == 'Secondary':
+            sentence += f"""* The region of your {data['which_residence']} residence has a **{risk}** level risk"""
+        else :
+            sentence += f"""* The region of your residence has a **{risk}** level risk"""
+        
+        sentence += '\n\n'
+    except :
+        pass
     
     #Blacklegged ticks on your property and property management
     sentence += "* Evidence suggests that most tick exposure occurs in the peri-domestic environment, rather than further afield. While it is not possible to determine your exact level of risk for blacklegged ticks based on a questionnaire, the presence of certain features on or near your property can provide an indication of risk, based on evidence reported in the scientific literature.\n\n"
     
-    # Herbaceous or wooded area in proximity
-    if data['house_proximity_wooded_area'] not in no_anti_ticks:
-        sentence += "* You reported having **herbaceous or wooded areas or edges on your property, and/or living near a wooded area**. The presence of herbaceous, wooded areas, and the intersection of these two habitats have been shown to be associated with an increase in diseases spread by ticks. This does not mean that you cannot spend time outdoors, but rather that **you should be vigilant and take steps to protect yourself**. There are several ways you can reduce the risk of exposure to ticks on your property - for more information, check [What can I do to reduce ticks in my yard?] (https://ticktool.etick.ca/what-can-i-do-to-reduce-ticks-in-my-yard/). Remember to protect yourself while making modification to your property by **wearing long clothes and applying bug repellent, and to perform a tick check and take a bath or shower afterwards**.\n"
+    try:
+    #Herbaceous or wooded area in proximity
+        if data['house_proximity_wooded_area'] not in no_anti_ticks:
+            sentence += "* You reported having **herbaceous or wooded areas or edges on your property, and/or living near a wooded area**. The presence of herbaceous, wooded areas, and the intersection of these two habitats have been shown to be associated with an increase in diseases spread by ticks. This does not mean that you cannot spend time outdoors, but rather that **you should be vigilant and take steps to protect yourself**. There are several ways you can reduce the risk of exposure to ticks on your property - for more information, check [What can I do to reduce ticks in my yard?] (https://ticktool.etick.ca/what-can-i-do-to-reduce-ticks-in-my-yard/). Remember to protect yourself while making modification to your property by **wearing long clothes and applying bug repellent, and to perform a tick check and take a bath or shower afterwards**.\n"
+    except:
+         pass
+    try:
+        # Courtyard feedback
+        if data['access_courtyard']== 'yes':
+            sentence += "* You reported **having a courtyard, garden, or wooded area**. While having an outdoor space does not automatically mean you are at risk of tick exposure, there are certain elements which are known to increase your risk of tick bite and/or diseases spread by ticks. These include: The **size of your yard, Certain types of cover, such as flower or vegetable gardens and herbaceous and wooded areas**.The **presence of a wood pile, the presence of a stone wall, the presence of leaf litter Activity areas such as children’s play areas, dining areas, and sitting areas**.\n"
+    except:
+          pass
+    try:
+        #children's play equipment
+        if data['courtyard_children_play_area'] == 'yes':
+            sentence += "* You reported **having children’s play equipment or an activity structure on your property**. It is a good idea to **move this type of equipment closer to the house, and away from long grass or herbaceous/wooded areas**. It is **preferable to have wood chips rather than grass in this area, or to keep the grass very short**.\n\n"
+    except:
+         pass
     
-    # Courtyard feedback
-    if data['access_courtyard']== 'yes':
-        sentence += "* You reported **having a courtyard, garden, or wooded area**. While having an outdoor space does not automatically mean you are at risk of tick exposure, there are certain elements which are known to increase your risk of tick bite and/or diseases spread by ticks. These include: The **size of your yard, Certain types of cover, such as flower or vegetable gardens and herbaceous and wooded areas**.The **presence of a wood pile, the presence of a stone wall, the presence of leaf litter Activity areas such as children’s play areas, dining areas, and sitting areas**.\n"
-    
-    #children's play equipment
-    if data['courtyard_children_play_area'] == 'yes':
-        sentence += "* You reported **having children’s play equipment or an activity structure on your property**. It is a good idea to **move this type of equipment closer to the house, and away from long grass or herbaceous/wooded areas**. It is **preferable to have wood chips rather than grass in this area, or to keep the grass very short**.\n\n"
-    
-    
+    try:
     #deer on your property
-    if data['house_deer'] == 'yes':
-        sentence += "* You reported **seeing or suspecting deer on your property**. Deer are a host species for the blacklegged tick, meaning they play an important role in the life cycle of the tick. Research suggests that not having a fence to exclude deer is associated with an increased risk of tick bites, and that the presence of deer is associated with an increased risk for people getting a disease spread by ticks. While it may not be feasible to install fencing around the entirety of your property, you could consider fencing off an area of the property that you use regularly. Doing this will also prevent deer from eating your plants and provides a safe space for pets to run. There are several ways you can reduce the risk of exposure to ticks on your property, such as installing fences and creating a mulch or gravel border around your yard. For more information, check [What can I do to reduce ticks in my yard?] (https://ticktool.etick.ca/what-can-i-do-to-reduce-ticks-in-my-yard/). Remember to protect yourself while working on your property by wearing long clothes and applying bug repellent, and to perform a tick check and take a bath or shower afterwards.\n\n"
-   
+        if data['house_deer'] == 'yes':
+            sentence += "* You reported **seeing or suspecting deer on your property**. Deer are a host species for the blacklegged tick, meaning they play an important role in the life cycle of the tick. Research suggests that not having a fence to exclude deer is associated with an increased risk of tick bites, and that the presence of deer is associated with an increased risk for people getting a disease spread by ticks. While it may not be feasible to install fencing around the entirety of your property, you could consider fencing off an area of the property that you use regularly. Doing this will also prevent deer from eating your plants and provides a safe space for pets to run. There are several ways you can reduce the risk of exposure to ticks on your property, such as installing fences and creating a mulch or gravel border around your yard. For more information, check [What can I do to reduce ticks in my yard?] (https://ticktool.etick.ca/what-can-i-do-to-reduce-ticks-in-my-yard/). Remember to protect yourself while working on your property by wearing long clothes and applying bug repellent, and to perform a tick check and take a bath or shower afterwards.\n\n"
+    except:
+          pass
+      
     sentence += '\n\n\n\n'
     
     return dcc.Markdown(sentence)
@@ -876,7 +888,6 @@ def display_personalized_text2(data):
     
     
     sentence = ""
-    
     #Your tick exposure in the last 12 months
     #sentence += "### Your tick exposure in the last 12 months\n\n"
     
