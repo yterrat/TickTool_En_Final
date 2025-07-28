@@ -1021,9 +1021,12 @@ def display_personalized_text3(data):
     )
 
 def display_pet_advices(data):
-    if data['dog'] == 'yes' or data['cat'] == 'yes' or data['horse'] == 'yes':
-        return False
-    else:
+    try :
+        if data['dog'] == 'yes' or data['cat'] == 'yes' or data['horse'] == 'yes':
+            return False
+        else:
+            return True
+    except:
         return True
 
 
