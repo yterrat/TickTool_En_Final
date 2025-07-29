@@ -15,7 +15,6 @@ app.prevent_initial_callbacks='initial_duplicate'
 app.suppress_callback_exceptions=True
 
 app.layout = html.Div([
-    dcc.Location(id='url', refresh=False),
     dbc.Container(
     [dash.page_container],
     fluid=True
@@ -24,5 +23,5 @@ app.layout = html.Div([
     dcc.Store(id='record_answers',storage_type='local', data = {})
 ])
 
-if __name__ == '__main__':
-    app.run_server(debug=False, host='0.0.0.0', port=int(os.environ.get('PORT', 8050)))
+if __name__ == "__main__":
+    app.run_server(debug=True)
