@@ -4,5 +4,6 @@ plotly==5.17.0
 gunicorn==21.2.0
 werkzeug==2.3.7
 flask==2.3.3
+dash-bootstrap-components
 pandas
 numpy
