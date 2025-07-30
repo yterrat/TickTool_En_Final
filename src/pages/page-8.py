@@ -1108,17 +1108,17 @@ def display_personalized_pet_advices_text(data):
 
 #### Print the dictionnary
 
-# @callback(
-#     Output('hidden-div', 'children'),
-#     Input('print-button', 'n_clicks')
-# )
-# def trigger_print(n_clicks):
-#     if n_clicks > 0:
-#         return dcc.Location(id='print-location', href='javascript:window.print();')
-#     return ''
+@callback(
+    Output('hidden-div', 'children'),
+    Input('print-button', 'n_clicks')
+)
+def trigger_print(n_clicks):
+    if n_clicks > 0:
+        return dcc.Location(id='print-location', href='javascript:window.print();')
+    return ''
 
-# ######
-# ######
+######
+######
 
 # #Display data dictionnary for dev
    
