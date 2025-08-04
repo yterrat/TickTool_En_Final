@@ -72,6 +72,7 @@ mykeys = [
   "Employment_status",
   "Income",
   "primary_language",
+  "primary_language_text",
   "population_group",
   "population_group_text",
   "commentaries"
@@ -321,53 +322,104 @@ layout = html.Div([
     #####################
     # Export the report #
     #####################
-    html.Div(
-        [
-            dcc.Link(
-                'Revise my questionnaire',
-                href='/page-2',
-                className='modern-link',
-                style={
-                    'display': 'inline-block',
-                    'textAlign': 'center',
-                    'backgroundColor': '#FF9636',
-                    'color': 'white',
-                    'padding': '10px',
-                    'fontSize': '15px',
-                    'borderRadius': '5px',
-                    'textDecoration': 'none',
-                    'whiteSpace': 'nowrap',
-                    'height': '42px',  # match button height
-                    'lineHeight': '22px'  # vertical alignment fix
-                }
-            ),
-            html.Button(
-                'Export my report to a PDF document',
-                id='print-button',
-                n_clicks=0,
-                style={
-                    'width': '300px',
-                    'textAlign': 'center',
-                    'backgroundColor': '#FF9636',
-                    'border': 'none',
-                    'borderRadius': '5px',
-                    'padding': '10px',
-                    'fontSize': '15px',
-                    'cursor': 'pointer',
-                    'color': 'white',
-                    'whiteSpace': 'nowrap',
-                    'height': '42px',
-                }
-            ),
-        ],
+    # html.Div(
+    #     [
+    #         dcc.Link(
+    #             'Revise my questionnaire',
+    #             href='/page-2',
+    #             className='modern-link',
+    #             style={
+    #                 'display': 'inline-block',
+    #                 'textAlign': 'center',
+    #                 'backgroundColor': '#FF9636',
+    #                 'color': 'white',
+    #                 'padding': '10px',
+    #                 'fontSize': '15px',
+    #                 'borderRadius': '5px',
+    #                 'textDecoration': 'none',
+    #                 'whiteSpace': 'nowrap',
+    #                 'height': '42px',  # match button height
+    #                 'lineHeight': '22px'  # vertical alignment fix
+    #             }
+    #         ),
+    #         html.Button(
+    #                 'Export my report to a PDF document',
+    #                 id='print-button',
+    #                 n_clicks=0,
+    #                 style={
+    #                     'width': '300px',
+    #                     'textAlign': 'center',
+    #                     'backgroundColor': '#FF9636',
+    #                     'border': 'none',
+    #                     'borderRadius': '5px',
+    #                     'padding': '10px',
+    #                     'fontSize': '15px',
+    #                     'cursor': 'pointer',
+    #                     'color': 'white',
+    #                     'whiteSpace': 'nowrap',
+    #                     'height': '42px',
+    #                 }
+    #             ),
+    #             html.Div(id='hidden-div')
+                
+    #         ],
+    #     style={
+    #         'display': 'flex',
+    #         'justifyContent': 'center',
+    #         'alignItems': 'center',
+    #         'gap': '40px',
+    #         'marginTop': '20px'
+    #     }
+    # ),
+    html.Div([
+        dcc.Link(
+            'Revise my questionnaire',
+            href='/page-2',
+            className='modern-link',
+            style={
+                'display': 'inline-block',
+                'textAlign': 'center',
+                'backgroundColor': '#FF9636',
+                'color': 'white',
+                'padding': '10px',
+                'fontSize': '15px',
+                'borderRadius': '5px',
+                'textDecoration': 'none',
+                'whiteSpace': 'nowrap',
+                'height': '42px',
+                'lineHeight': '22px',
+                'width': '300px'  # Match button width
+            }
+        ),
+        html.Button(
+            'Export my report to a PDF document',
+            id='print-button',
+            n_clicks=0,
+            style={
+                'width': '300px',
+                'textAlign': 'center',
+                'backgroundColor': '#FF9636',
+                'border': 'none',
+                'borderRadius': '5px',
+                'padding': '10px',
+                'fontSize': '15px',
+                'cursor': 'pointer',
+                'color': 'white',
+                'height': '42px',
+                'lineHeight': '22px'
+            }
+        )
+    ],
         style={
             'display': 'flex',
-            'justifyContent': 'center',
+            'flexDirection': 'column',
             'alignItems': 'center',
-            'gap': '40px',
-            'marginTop': '20px'
+            'justifyContent': 'center',
+            'gap': '20px',
+            'marginTop': '40px'
         }
     ),
+    html.Div(id='hidden-div', style={'display': 'none'}),
     html.Br(),
     html.Hr(className='grey_blue_line'),
     ####################
@@ -829,6 +881,8 @@ def display_personalized_text1(data):
         risk = risk_dict.get(data['zipcode'], 'Unknown')
         no_anti_ticks = ['no', 'yes', "I don't remember"]
         
+        if risk == 'Unknown':
+            sentence += '* At this time, we do not have data to indicate the habitat suitability for Ixodes scapularis in your postal code region. To better understand where Ixodes scapularis ticks (and other ticks) are present in Canada, you can consult [eTick] (https://www.etick.ca/) . To find out if you are in a Lyme disease risk area, you can use [this tool] (https://www.canada.ca/en/public-health/services/diseases/lyme-disease/surveillance-lyme-disease.html#a4) provided by the Public Health Agency of Canada. In addition, you can consult your provincial government webpages for resources on ticks and Lyme disease to learn more about risk in your region.\n\n'
         ###############################################################################
         # 1 The potential presence of blacklegged ticks in your environment
         ###############################################################################
@@ -914,29 +968,35 @@ def display_personalized_text2(data):
     #outdoor activity
     try :
         
-        if data['time_daily_wooded_area'] == 'More than five hours per day':
+        if data['frequency_outdoor_activities'] != 'Never':
             sentence += "* You reported engaging in at least one outdoor activity which occurs in potential tick habitats, at least once or twice a season. Outdoor recreation in general can be associated with increased tick bites and risk of disease spread by ticks, and increased time spent in vegetation can also increase the risk of diseases spread by ticks. Previous research studies have found associations between specific activities such as hiking, hunting, and yard work and an increased risk of contracting a disease transmitted by ticks. However, it is prudent to assume that there can be a risk of tick exposure when participating in any outdoor activity occurring in grassy, wooded, or herbaceous areas. While there is no need to stop doing these activities – it is important to protect yourself, your family, and your pets from tick bites, and to always perform tick checks! \n\n"
         elif data['time_daily_wooded_area'] == 'Between one and five hours per day':
             sentence += "* As with engaging in outdoor activities, occupational exposure to ticks has been associated with an increased risk of diseases spread by ticks, therefore it is important for you to adopt consistent and regular prevention measures. Depending on the bug repellent you choose to use and how long you are outdoors in one day, you may need to reapply the repellent while you are outside, so take it with you and/or leave one in the car. It is also a good idea to stop and perform tick checks throughout the day, rather than waiting until the end of the day.\n\n"
     except :
         pass
+    
+    sentence += "* If you frequently work or spend time in potential tick habitats, you may wish to invest in clothing which has been treated with permethrin as an additional layer of protection. For more information on how to protect yourself from ticks when outdoors, check .\n\n"
+
+    
         
-    try :
-        if data['time_daily_wooded_area'] == 'More than five hours per day' or data['time_daily_wooded_area'] == 'Between one and five hours per day':
-            sentence += "* If you frequently work or spend time in potential tick habitats, you may wish to invest in clothing which has been treated with permethrin as an additional layer of protection. For more information on how to protect yourself from ticks when outdoors, check [Everything you need to know about prevention] (https://ticktool.etick.ca/all-you-need-to-know-about-ticks/)\n\n"
-    except :
-        pass    
+    # try :
+    #     if data['time_daily_wooded_area'] == 'More than five hours per day' or data['time_daily_wooded_area'] == 'Between one and five hours per day':
+    #         sentence += "* If you frequently work or spend time in potential tick habitats, you may wish to invest in clothing which has been treated with permethrin as an additional layer of protection. For more information on how to protect yourself from ticks when outdoors, check [Everything you need to know about prevention] (https://ticktool.etick.ca/all-you-need-to-know-about-ticks/)\n\n"
+    # except :
+    #     pass    
+    
+    
     no_in_prior_tick_exposure = ['Never','Not applicable']
     
     try :
-        if (data['time_daily_wooded_area'] == 'Never' or data['time_daily_wooded_area'] == 'Less than one hour per day') \
+        if (data['frequency_outdoor_activities'] == 'Never' or data['time_daily_wooded_area'] == 'Less than one hour per day') \
             and (data['attached_to_your_skin'] in no_in_prior_tick_exposure ) \
                 and (data['Freely_moving'] in no_in_prior_tick_exposure ) \
                     and (data['On_a_pet'] in no_in_prior_tick_exposure) \
                         and (data['Freely_moving_outside'] in no_in_prior_tick_exposure) :
                             sentence += "* You reported spending little time either recreating or working outdoors, meaning you are less likely to enter tick habitats. However, note that is a low risk of encountering a tick anywhere in Canada south of the Arctic circle due to the possibility of ticks being dispersed by birds outside of their usual habitats.\n\n"
         
-        if (data['time_daily_wooded_area'] == 'Never' or data['time_daily_wooded_area'] == 'Less than one hour per day') \
+        if (data['frequency_outdoor_activities'] == 'Never' or data['time_daily_wooded_area'] == 'Less than one hour per day') \
             and ( (data['attached_to_your_skin'] not in no_in_prior_tick_exposure ) \
                 or (data['Freely_moving'] not in no_in_prior_tick_exposure ) \
                     or (data['On_a_pet'] not in no_in_prior_tick_exposure) \
@@ -984,9 +1044,9 @@ def display_personalized_text3(data):
     # Living alone or live with someone feedback
     try:
         if data['live_alone'] == 'yes' :
-            sentence += """* Performing tick checks can be challenging for everyone, as ticks like to hide in places where they cannot be found. As you **live alone**, it can be very useful to have both a **full-length mirror** as well as a **handheld mirror** to make this process easier.Some people find that having a **lint roller** available can help to reach ticks which have not attached, and similarly, a **loofah in the shower** can help to dislodge ticks from places you cannot reach. Remember to pay particular attention to your **scalp, hairline, ears, arms, chest, back, waist, belly button, groin, legs and behind knees, and between the toes**.\n\n  In 2021, 45% of Lyme disease cases in Canada were diagnosed in adults aged 55-79 years. This does not mean that people in this age group cannot spend time outdoors, but rather suggests that this age group should **adopt consistent behaviours** to protect themselves from ticks.\n\n  For more information on how to protect yourself, check [Everything you need to know about prevention] (https://ticktool.etick.ca/all-you-need-to-know-about-ticks/)\n"""
+            sentence += """* Performing tick checks can be challenging for everyone, as ticks like to hide in places where they cannot be found. As you **live alone**, it can be very useful to have both a **full-length mirror** as well as a **handheld mirror** to make this process easier.Some people find that having a **lint roller** available can help to reach ticks which have not attached, and similarly, a **loofah in the shower** can help to dislodge ticks from places you cannot reach. Remember to pay particular attention to your **scalp, hairline, ears, arms, chest, back, waist, belly button, groin, legs and behind knees, and between the toes**.\n\n  In 2021, 45% of Lyme disease cases in Canada were diagnosed in adults aged 55-79 years. This does not mean that people in this age group cannot spend time outdoors, but rather suggests that this age group should **adopt consistent behaviours** to protect themselves from ticks.\n\n  For more information on how to protect yourself, check [Everything you need to know about prevention] (https://ticktool.etick.ca/incorporate-prevention)\n"""
         elif data['live_with_someone_over_18'] == 'yes' :
-            sentence += """* As you **live with another adult**, you can **remind each other to adopt preventive behaviours** against tick bites and **help each other to perform a tick check** – particularly the hard-to-reach places such as the **scalp and back**. By helping and reminding each other to think about ticks, it will be **easier to incorporate these practices into your routine**.**If performing a tick check alone**, it can be very useful to have both a **full-length mirror** as well as a **handheld mirror** to make this process easier. Some people find that having a **lint roller** available can also be helpful to reach ticks which have not attached, and similarly, a **loofah in the shower** can help to dislodge ticks from places you cannot reach.\n\n  In 2021, 45% of Lyme disease cases in Canada were diagnosed in adults aged 55-79 years. This does not mean that people in this age group cannot spend time outdoors, but rather suggests that this age group should try to adopt consistent behaviours to protect themselves from ticks.\n\n  For more information on how to protect yourself, check [Everything you need to know about prevention] (https://ticktool.etick.ca/all-you-need-to-know-about-ticks/)\n"""
+            sentence += """* As you **live with another adult**, you can **remind each other to adopt preventive behaviours** against tick bites and **help each other to perform a tick check** – particularly the hard-to-reach places such as the **scalp and back**. By helping and reminding each other to think about ticks, it will be **easier to incorporate these practices into your routine**.**If performing a tick check alone**, it can be very useful to have both a **full-length mirror** as well as a **handheld mirror** to make this process easier. Some people find that having a **lint roller** available can also be helpful to reach ticks which have not attached, and similarly, a **loofah in the shower** can help to dislodge ticks from places you cannot reach.\n\nIn 2021, 45% of Lyme disease cases in Canada were diagnosed in adults aged 55-79 years. This does not mean that people in this age group cannot spend time outdoors, but rather suggests that this age group should try to adopt consistent behaviours to protect themselves from ticks.\n\n  For more information on how to protect yourself, check [Everything you need to know about prevention] (https://ticktool.etick.ca/all-you-need-to-know-about-ticks/)\n"""
         elif data['live_with_child_0_4'] == 'yes' or data['live_with_child_5_14'] == 'yes' or data['live_with_child_15_18'] == 'yes':
             sentence += """* Approximately **11% of Lyme disease cases reported in Canada in 2021 were in children aged 5-14 years**, however other evidence suggests that the risk of tick bites is **higher in children aged 5 years or less**. This can be attributed to the fact that children this age **often play low to the ground and leave designated trails**. They are also **less likely to check themselves** for ticks. This does **not** mean that older children cannot develop a tick-borne disease, and it is important for all members of the family to learn how to protect themselves from ticks. As with adults, the risk can be reduced by performing a **tick check, wearing long clothes, tucking in clothes, wearing bug repellent if over 6 months of age, and bathing or showering after spending time outdoors**.\n  For more information on how to protect children from ticks bites, check [How can I protect my children?] (https://ticktool.etick.ca/how-can-i-protect-my-children/)’.\n"""
     except :
@@ -1016,7 +1076,7 @@ def display_personalized_text3(data):
         else :
             sentence += "* Herbaceous brush and long branches provide a suitable environment for small rodents, which not only carry ticks but are vital in the life cycle of the bacteria which cause Lyme disease and other diseases spread by ticks. By removing herbaceous areas in the areas where you or your pets spend a lot of time, you can make these areas less hospitable for mice and ticks, reducing the chance of them venturing close to your house.\n\n"
         
-        sentence += "Bear in mind that yard work, time spent in vegetation and general outdoor activity can increase your risk of getting a disease spread by ticks, so remember to protect yourself while working on your property by wearing long clothes and applying bug repellent, and to perform a tick check and take a bath or shower afterwards. Many people are concerned outdoor measures to reduce the risk of tick exposure may have negative environmental consequence. To learn more about this and other FAQs, check ‘[What can I do to reduce ticks in my yard?] (https://ticktool.etick.ca/what-can-i-do-to-reduce-ticks-in-my-yard/).\n\n"
+        sentence += "Bear in mind that yard work, time spent in vegetation and general outdoor activity can increase your risk of getting a disease spread by ticks, so remember to protect yourself while working on your property by wearing long clothes and applying bug repellent, and to perform a tick check and take a bath or shower afterwards. Many people are concerned outdoor measures to reduce the risk of tick exposure may have negative environmental consequence. To learn more about this and other FAQs, check ‘[What can I do to reduce ticks in my yard?] (https://ticktool.etick.ca/what-can-i-do-to-reduce-ticks-in-my-yard/)."
      
     except :
         pass
@@ -1072,7 +1132,7 @@ def display_personalized_pet_advices_text(data):
         if data['horse'] == 'yes':
             sentence += "* Horses can suffer from Lyme disease too, and as there is no vaccine licensed for horses, tick prevention is important. Grooming and checking for ticks daily, appropriate pasture management, and the use of species-specific bug repellents can all help to reduce the risk of tick bites. For more information on diseases spread by ticks and tick bite prevention, speak to your veterinarian. Some studies have found that owning or riding horses has been associated with an increased risk of tick bites and disease spread by ticks. This is most likely due to riders and horses being in the same environment and having a similar risk of tick exposure.\n"
         
-        sentence += "* For more information on pets and ticks, visit [How can I protect my pets?](https://ticktool.etick.ca/how-can-i-protect-my-pets/)    [Tick Talk Canada]( https://ticktalkcanada.com/)\n\n"
+        sentence += "* For more information on pets and ticks, visit [How can I protect my pets?](https://ticktool.etick.ca/how-can-i-protect-my-pets/)   and [Tick Talk Canada]( https://ticktalkcanada.com/)"
     except:
         pass
     

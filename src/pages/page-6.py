@@ -13,19 +13,16 @@ layout = html.Div([
     html.Br(),
     html.Div([
         html.B('Confidence', style={'font-size': '60px'})
-        ], style={'text-align': 'center'}),
-    ######
-    ######
+    ]),
     html.Br(),
     html.Br(),
-    html.P("Please indicate your level of agreement with the following four statements :", \
-           style={'font-size': '25px'}),
+    html.P("Please indicate your level of agreement with the following four statements :", style={'font-size': '25px'}),
     html.Br(),
     html.Br(),
+
     html.Div([
-        html.B('I am confident that I can prevent a tick bite.'),
-        html.Br(),
-        html.Br(),
+        html.B('1. I am confident that I can prevent a tick bite.'),
+        html.Br(), html.Br(),
         dcc.Dropdown(
             options=[
                 {'label': 'Strongly agree', 'value': 'Strongly agree'},
@@ -35,99 +32,125 @@ layout = html.Div([
                 {'label': "Strongly disagree", 'value': "Strongly disagree"}
             ],
             style={'width': '300px'},
-            #value='',
-            id = 'confidence_prevent_tick_bite'
+            id='confidence_prevent_tick_bite'
         )
-    ], style={'font-size': '20px',  'marginLeft' : '30px'}),
+    ], style={'font-size': '20px', 'textAlign': 'center'}),
+
     html.Br(),
     html.Hr(className='grey_blue_line'),
+    
+    
     ######
-    ######
+    
+
     html.Div([
-        html.B("I am confident that I could find a young tick (nymph, pictured) on my clothes or skin.",className='question_style2'),
-        html.Br(),
-        html.Br(),
-        html.Img(src='/assets/Tick1.jpg', style={'width': '30vw', 'height': 'auto'}),
-        html.Br(),
-        html.Br(),
-        dcc.Dropdown(
-            options=[
-                {'label': 'Strongly agree', 'value': 'Strongly agree'},
-                {'label': "Somewhat agree", 'value': "Somewhat agree"},
-                {'label': "Neither agree nor disagree", 'value': "Neither agree nor disagree"},
-                {'label': "Somewhat disagree", 'value': "Somewhat disagree"},
-                {'label': "Strongly disagree", 'value': "Strongly disagree"}
-            ],
-            style={'width': '300px'},
-            #value='',
-            id = 'confidence_young_tick'
-        )
-    ], style={'font-size': '20px',  'marginLeft' : '30px'}),
-    html.Br(),
-    html.Hr(className='grey_blue_line'),
-    ######
-    ###### 
-    html.Div([
-        html.B("I am confident that I could find an adult tick (pictured) on my clothes or skin."),
-        html.Br(),
-        html.Br(),
-        html.Img(src='/assets/tick2.jpg', style={'width': '30vw', 'height': 'auto'}),
-        html.Br(),
-        html.Br(),
-        dcc.Dropdown(
-            options=[
-                {'label': 'Strongly agree', 'value': 'Strongly agree'},
-                {'label': "Somewhat agree", 'value': "Somewhat agree"},
-                {'label': "Neither agree nor disagree", 'value': "Neither agree nor disagree"},
-                {'label': "Somewhat disagree", 'value': "Somewhat disagree"},
-                {'label': "Strongly disagree", 'value': "Strongly disagree"}
-            ],
-            style={'width': '300px'},
-            #value='',
-            id = 'confidence_adult_tick'
-        )
-    ], style={'font-size': '20px',  'marginLeft' : '30px'}),
-    html.Br(),
-    html.Hr(className='grey_blue_line'),
-    ######
-    ######
-    html.Div([
-        html.B("I could safely and effectively remove a tick which had embedded into the skin."
-               , className= 'question_style2'),
-        html.Br(),
-        html.Br(),
-        dcc.Dropdown(
-            options=[
-                {'label': 'Strongly agree', 'value': 'Strongly agree'},
-                {'label': "Somewhat agree", 'value': "Somewhat agree"},
-                {'label': "Neither agree nor disagree", 'value': "Neither agree nor disagree"},
-                {'label': "Somewhat disagree", 'value': "Somewhat disagree"},
-                {'label': "Strongly disagree", 'value': "Strongly disagree"}
-            ],
-            style={'width': '300px'},
-            #value='',
-            id = 'safely_remove_a_tick'
-        )
-    ], style={'font-size': '20px',  'marginLeft' : '30px'}),
-    html.Br(),
-    html.Br(),
+    html.B("2. I am confident that I could find a young tick (nymph, pictured) on my clothes or skin.", className='question_style2'),
+    html.Br(), html.Br(),
+
     html.Div(
-    [
+        html.Img(src='/assets/Tick1.jpg', style={'width': '30vw', 'height': 'auto'}),
+        style={'textAlign': 'center'}
+    ),
+
+    html.Br(), html.Br(),
+    html.Div(
+        dcc.Dropdown(
+            options=[
+                {'label': 'Strongly agree', 'value': 'Strongly agree'},
+                {'label': "Somewhat agree", 'value': "Somewhat agree"},
+                {'label': "Neither agree nor disagree", 'value': "Neither agree nor disagree"},
+                {'label': "Somewhat disagree", 'value': "Somewhat disagree"},
+                {'label': "Strongly disagree", 'value': "Strongly disagree"}
+            ],
+            style={'width': '300px'},
+            id='confidence_young_tick'
+        ),
+        style={'display': 'flex', 'justifyContent': 'center'}
+        )
+    ], style={'font-size': '20px'}),
+
+    html.Br(),
+    html.Hr(className='grey_blue_line'),
+    
+
+    #######
+    #######
+    
+    html.Div([
+    html.B("3. I am confident that I could find an adult tick (pictured) on my clothes or skin.", className='question_style2'),
+    html.Br(), html.Br(),
+
+    html.Div(
+        html.Img(src='/assets/tick2.jpg', style={'width': '30vw', 'height': 'auto'}),
+        style={'textAlign': 'center'}
+    ),
+
+    html.Br(), html.Br(),
+    html.Div(
+        dcc.Dropdown(
+            options=[
+                {'label': 'Strongly agree', 'value': 'Strongly agree'},
+                {'label': "Somewhat agree", 'value': "Somewhat agree"},
+                {'label': "Neither agree nor disagree", 'value': "Neither agree nor disagree"},
+                {'label': "Somewhat disagree", 'value': "Somewhat disagree"},
+                {'label': "Strongly disagree", 'value': "Strongly disagree"}
+            ],
+            style={'width': '300px'},
+            id='confidence_adult_tick'
+        ),
+        style={'display': 'flex', 'justifyContent': 'center'}
+        )
+    ], style={'font-size': '20px'}),
+
+    html.Br(),
+    html.Hr(className='grey_blue_line'),
+    
+    #######
+    #######
+    
+    html.Div([
+    html.B("4. I could safely and effectively remove a tick which had embedded into the skin.", className='question_style2'),
+    html.Br(), html.Br(),
+    html.Div(
+        dcc.Dropdown(
+            options=[
+                {'label': 'Strongly agree', 'value': 'Strongly agree'},
+                {'label': "Somewhat agree", 'value': "Somewhat agree"},
+                {'label': "Neither agree nor disagree", 'value': "Neither agree nor disagree"},
+                {'label': "Somewhat disagree", 'value': "Somewhat disagree"},
+                {'label': "Strongly disagree", 'value': "Strongly disagree"}
+            ],
+            style={'width': '300px'},
+            id='safely_remove_a_tick'
+        ),
+        style={'display': 'flex', 'justifyContent': 'center'}
+        )
+    ], style={'font-size': '20px'}),
+
+    html.Br(), html.Br(),
+    html.Br(), html.Br(),
+    html.Div([
         dcc.Link('Previous', href='/page-5', className='modern-link', style={'width': '150px', 'textAlign': 'center'}),
         dcc.Link('Next', href='/page-7', className='modern-link', style={'width': '150px', 'textAlign': 'center'}),
-    ],
-    style={
+    ], style={
         'display': 'flex',
         'justifyContent': 'center',
         'alignItems': 'center',
         'gap': '40px'
-        }
-    ),
-    html.Br(),
-    html.Br(),
-    dbc.Progress(value=90, style={"height": "15px"}, className="mb-3", label = "90% done"),
-])
-    
+    }),
+
+    html.Br(), html.Br(),
+    dbc.Progress(value=90, style={"height": "15px", "width": "60%"}, className="mb-3", label="90% done"),
+
+], style={
+    'display': 'flex',
+    'flexDirection': 'column',
+    'alignItems': 'center',
+    'justifyContent': 'center',
+    'width': '100%',
+    'textAlign': 'center'
+})
+
     
 
 @callback(

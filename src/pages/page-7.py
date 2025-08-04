@@ -186,6 +186,17 @@ layout = html.Div([
                         )],
                         style={'font-size': '15px'}
                     ),
+            html.Div(
+                id='primary_language_addition',
+                children=[
+                    html.Br(),
+                    html.P('Please specify the primary language :',className='question_style2'),
+                    dcc.Textarea(
+                        id='primary_language_text',
+                        value='',
+                        style={'width': '30%', 'height': 40}
+                        )
+                    ]),
             html.Br(),
             #html.Hr(className='grey_blue_line'),
             ######
@@ -278,6 +289,7 @@ layout = html.Div([
     Input('Employment_status', 'value'),
     Input('Income', 'value'),
     Input('primary_language', 'value'),
+    Input('primary_language_text', 'value'),
     Input('population_group', 'value'),
     Input('population_group_text', 'value'),
     Input('commentaries', 'value'),
@@ -285,7 +297,7 @@ layout = html.Div([
     prevent_initial_call=True,
 )
 
-def update_dic_p7(Q1,Q2,Q3,Q4,Q5,Q6,Q7,Q8,Q9,Q10,data):
+def update_dic_p7(Q1,Q2,Q3,Q4,Q5,Q6,Q7,Q8,Q9,Q10,Q11,data):
     data = data or {}
     if Q1 is not None :
         data['consent'] = Q1
@@ -302,11 +314,13 @@ def update_dic_p7(Q1,Q2,Q3,Q4,Q5,Q6,Q7,Q8,Q9,Q10,data):
     if Q7 is not None :
         data['primary_language'] = Q7
     if Q8 is not None :
-        data['population_group'] = Q8
-    if Q9 is not None:
-        data['population_group_text'] = Q9
-    if Q10 is not None :
-        data['commentaries'] = Q10
+         data['primary_language_text'] = Q8    
+    if Q9 is not None :
+        data['population_group'] = Q9
+    if Q10 is not None:
+        data['population_group_text'] = Q10
+    if Q11 is not None :
+        data['commentaries'] = Q11
     return data
 
 
@@ -320,6 +334,7 @@ def update_dic_p7(Q1,Q2,Q3,Q4,Q5,Q6,Q7,Q8,Q9,Q10,data):
     Output('Employment_status', 'value'),
     Output('Income', 'value'),
     Output('primary_language', 'value'),
+    Output('primary_language_text', 'value'),
     Output('population_group', 'value'),
     Output('population_group_text', 'value'),
     Output('commentaries', 'value'),
@@ -335,6 +350,7 @@ def set_dropdown_value(data):
         data.get('Employment_status', None),
         data.get('Income', None),
         data.get('primary_language', None),
+        data.get('primary_language_text', None),
         data.get('population_group', None),
         data.get('population_group_text', None),
         data.get('commentaries', None)
@@ -360,6 +376,20 @@ def show_hide_element_consent(consent):
 
 def show_hide_element_population_group_addition(answ):
     if answ == 'Population group not listed above':
+        return False
+    else:
+        return True
+
+
+#######
+#######
+    
+@callback(
+    Output(component_id='primary_language_addition', component_property='hidden'),
+    [Input(component_id='primary_language', component_property='value')])
+
+def show_hide_element_population_group_addition(answ):
+    if answ == 'Other (please specify)':
         return False
     else:
         return True

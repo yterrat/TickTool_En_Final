@@ -48,50 +48,102 @@ layout = html.Div([
     html.Img(src='/assets/TickTOOL_logo.png', style={'width': '40%', 'height': '40%'}, className='image-gallery'),
     html.Hr(className='orange_line'),
     html.Br(),
+
     html.Div([
-        html.B('Evaluate your prevention strategy', style={'font-size': '60px'})
-    ], style={'text-align': 'center'}),
-    html.Br(),
-    html.P([
-        "The potential risk from tick bites - and how to prevent tick bites - can sometimes feel a little overwhelming",
+        html.Div([
+            html.B('Evaluate your prevention strategy', style={'font-size': '60px'})
+        ], style={'textAlign': 'center'}),
         html.Br(),
-        "Would you like to better understand your risk of being bitten by a tick and learn how to improve your tick bite prevention strategy for yourself and your family?",
+        html.Br(),
+    
+        html.P([
+            "The potential risk from tick bites – and how to prevent tick bites – can sometimes feel a little overwhelming. ",
+            "Would you like to better understand your risk of being bitten by a tick and learn how to improve your tick bite prevention strategy for yourself and your family? ",
+            "Complete the questionnaire and receive a personalised report so you can make informed decisions and take action in a way that is right for you, to help keep you and your family safe."
+        ], style={
+            'textAlign': 'justify',
+            'marginLeft': '20px',
+            'marginRight': '20px',
+            'fontSize': '20px'
+        }),
+    
         html.Br(), html.Br(),
-        "Complete the questionnaire and receive a personalised report so you can make informed decisions and take action in a way that is right for you, to help keep you and your family safe.",
-        html.Br(),
-        "The questionnaire should take approximately 15 minutes to complete."
-    ], style={'textAlign': 'center', 'marginLeft': '20px','marginRight': '20px','fontSize': '20px'}),
+    
+        html.P(
+            "The questionnaire should take approximately 10 minutes to complete. "
+            "Your personalized report will show three levels of risk: one based on how likely it is to find blacklegged ticks in your area, "
+            "one based on your outdoor activities, and one based on the behaviours you adopt to protect yourself — as shown below.",
+            style={
+                'textAlign': 'justify',
+                'marginLeft': '20px',
+                'marginRight': '20px',
+                'fontSize': '20px'
+            }
+    )
+    ]),
 
+    
+    
+    
+    
     html.Br(),
     html.Div([
-        html.P('Potential for BLT in environment', style={'font-size': '25px', "font-weight": "bold"}),
-        html.P('Risk of exposure', style={'font-size': '25px', "font-weight": "bold"}),
-        html.P('Level of preventive behaviours', style={'font-size': '25px', "font-weight": "bold"})
-    ], style={
-        'display': 'flex',
-        'justify-content': 'space-evenly',
-        'align-items': 'center',
-        'margin-top': '20px'
-    }),
-
     html.Div([
-        build_gauge('gauge_in1', 0.0, {
-            'grey': [0, 0.1], 'limegreen': [0.1, 1], 'orange': [1, 2], 'red': [2, 3]
-        }, [0.6, 1.5, 2.4], ['Low', 'Moderate', 'High']),
-
-        build_gauge('gauge_in2', 0.0, {
-            'grey': [0, 0.1], 'limegreen': [0.1, 1], 'orange': [1, 2], 'red': [2, 3]
-        }, [0.6, 1.5, 2.4], ['Low', 'Moderate', 'High']),
-
-        build_gauge('gauge_in3', 0.0, {
-            'grey': [0, 0.1], 'red': [0.1, 1], 'orange': [1, 2], 'limegreen': [2, 3]
-        }, [0.6, 1.5, 2.4], ['Low', 'Moderate', 'High'])
+            html.P('Potential for blacklegged ticks in environment', style={'font-size': '25px', "font-weight": "bold", 'textAlign': 'center'}),
+            build_gauge('gauge_in1', 0.0, {
+                'grey': [0, 0.1], 'limegreen': [0.1, 1], 'orange': [1, 2], 'red': [2, 3]
+            }, [0.6, 1.5, 2.4], ['Low', 'Moderate', 'High'])
+        ], style={'display': 'flex', 'flexDirection': 'column', 'alignItems': 'center'}),
+    
+        html.Div([
+            html.P('Risk of exposure', style={'font-size': '25px', "font-weight": "bold", 'textAlign': 'center'}),
+            build_gauge('gauge_in2', 0.0, {
+                'grey': [0, 0.1], 'limegreen': [0.1, 1], 'orange': [1, 2], 'red': [2, 3]
+            }, [0.6, 1.5, 2.4], ['Low', 'Moderate', 'High'])
+        ], style={'display': 'flex', 'flexDirection': 'column', 'alignItems': 'center'}),
+    
+        html.Div([
+            html.P('Level of preventive behaviours', style={'font-size': '25px', "font-weight": "bold", 'textAlign': 'center'}),
+            build_gauge('gauge_in3', 0.0, {
+                'grey': [0, 0.1], 'red': [0.1, 1], 'orange': [1, 2], 'limegreen': [2, 3]
+            }, [0.6, 1.5, 2.4], ['Low', 'Moderate', 'High'])
+        ], style={'display': 'flex', 'flexDirection': 'column', 'alignItems': 'center'})
     ], style={
         'display': 'flex',
-        'justify-content': 'space-evenly',
-        'align-items': 'center',
-        'margin-top': '40px',
+        'justifyContent': 'space-evenly',
+        'alignItems': 'flex-start',
+        'marginTop': '40px'
     }),
+
+    # html.Div([
+    #     html.P('Potential for BLT in environment', style={'font-size': '25px', "font-weight": "bold"}),
+    #     html.P('Risk of exposure', style={'font-size': '25px', "font-weight": "bold"}),
+    #     html.P('Level of preventive behaviours', style={'font-size': '25px', "font-weight": "bold"})
+    # ], style={
+    #     'display': 'flex',
+    #     'justify-content': 'space-evenly',
+    #     'align-items': 'center',
+    #     'margin-top': '20px'
+    # }),
+
+    # html.Div([
+    #     build_gauge('gauge_in1', 0.0, {
+    #         'grey': [0, 0.1], 'limegreen': [0.1, 1], 'orange': [1, 2], 'red': [2, 3]
+    #     }, [0.6, 1.5, 2.4], ['Low', 'Moderate', 'High']),
+
+    #     build_gauge('gauge_in2', 0.0, {
+    #         'grey': [0, 0.1], 'limegreen': [0.1, 1], 'orange': [1, 2], 'red': [2, 3]
+    #     }, [0.6, 1.5, 2.4], ['Low', 'Moderate', 'High']),
+
+    #     build_gauge('gauge_in3', 0.0, {
+    #         'grey': [0, 0.1], 'red': [0.1, 1], 'orange': [1, 2], 'limegreen': [2, 3]
+    #     }, [0.6, 1.5, 2.4], ['Low', 'Moderate', 'High'])
+    # ], style={
+    #     'display': 'flex',
+    #     'justify-content': 'space-evenly',
+    #     'align-items': 'center',
+    #     'margin-top': '40px',
+    # }),
 
     html.Br(),
     html.Div(dcc.Link("Begin the questionnaire and get your scores and personalized report", href='/page-2', style={
