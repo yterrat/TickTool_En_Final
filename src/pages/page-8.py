@@ -144,7 +144,8 @@ def build_gauge_figure(value, color_ranges):
     ))
 
     layout_config = {
-        "margin": dict(t=10, b=130, l=40, r=40),  # extra space for bottom text
+        #"margin": dict(t=10, b=130, l=40, r=40),  # extra space for bottom text
+        "margin": dict(t=0, b=0, l=0, r=0),
         "paper_bgcolor": "white",
     }
 
@@ -199,7 +200,7 @@ layout = html.Div([
     html.Br(),
     html.P("Here is a legend that will help you understand the meaning of the colors :", style={'fontSize': '20px','textAlign': 'center','marginTop': '20px','marginBottom': '20px'  }),
     html.Br(),
-    html.Img(src='/assets/legend_p8.png', style={'width': '60%', 'height': '60%'}, className='image-gallery'),
+    html.Img(src='/assets/legend_p8_2.png', style={'width': '45%', 'height': '45%'}, className='image-gallery'),
     html.Br(),
     html.P('"The greener the score, the lower your risk of being bitten by a tick and the better your prevention strategies."', style={'fontSize': '32px','textAlign': 'center','marginTop': '20px','marginBottom': '20px', 'font-weight': 'bold' }),
     html.Br(),
@@ -1025,7 +1026,12 @@ def display_personalized_text3(data):
     # except:
     #     sentence += "*This is the risk level you would be given if you lived in or visited a Lyme disease risk area, or if Lyme disease emerges in your current region.*\n\n"
         
-    sentence += "Research has demonstrated the association between increased risk of diseases spread by ticks and the lack of adopting protective measures, including not performing a tick check, not using bug repellent, not wearing appropriate clothing, and not bathing after spending time outdoors. Each behaviour provides an additional layer of protection, and there is no single behaviour which is guaranteed to prevent tick bites or disease. Therefore, it is recommended that you adopt as many preventive behaviours as is possible and feasible for you and your family : [TickTool link](https://ticktool.etick.ca/incorporate-prevention) \n\n"
+    sentence += "Research has demonstrated the association between increased risk of diseases spread by ticks and the lack of adopting protective measures, including not performing a tick check, not using bug repellent, not wearing appropriate clothing, and not bathing after spending time outdoors. Each behaviour provides an additional layer of protection, and there is no single behaviour which is guaranteed to prevent tick bites or disease. Therefore, it is recommended that you adopt as many preventive behaviours as is possible and feasible for you and your family : [How can I protect myself?](https://ticktool.etick.ca/incorporate-prevention) \n\n"
+    try:
+        if data['visite_area_disease_ticks'] != 'yes':
+            sentence += "* You reported not living in or visiting a region where you knew or suspected you could contract Lyme disease or another diseases transmitted by ticks. Based on your current adoption of preventive behaviours, your risk level and feedback reflects two potential situations: 1) if ticks and associate pathogens were to emerge in your region and/or 2) if you moved to or visited (knowingly or unknowingly) an area with suitable habitat for Ixodes scapularis ticks. \n\n"
+    except:
+        pass
     
     no_body_check = ['Never','Rarely', 'Sometimes']
     try :
