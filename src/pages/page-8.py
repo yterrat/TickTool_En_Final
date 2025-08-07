@@ -202,7 +202,7 @@ layout = html.Div([
     html.Br(),
     html.Img(src='/assets/legend_p8_2.png', style={'width': '35%', 'height': '35%'}, className='image-gallery'),
     html.Br(),
-    html.P('"The greener the score, the lower your risk of being bitten by a tick and the better your prevention strategies."', style={'fontSize': '32px','textAlign': 'center','marginTop': '20px','marginBottom': '20px', 'font-weight': 'bold' }),
+    html.P('"The greener the score, the lower your risk of being bitten by a tick and the better your prevention strategies."', style={'fontSize': '32px', 'textDecoration': 'underline','textAlign': 'center','marginTop': '20px','marginBottom': '20px', 'font-weight': 'bold' }),
     html.Br(),
     #html.Hr(className='orange_line'),
     #############
