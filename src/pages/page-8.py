@@ -200,26 +200,38 @@ layout = html.Div([
     html.Br(),
     html.P("Here is a legend that will help you understand the meaning of the colors :", style={'fontSize': '20px','textAlign': 'center','marginTop': '20px','marginBottom': '20px'  }),
     html.Br(),
-    html.Img(src='/assets/legend_p8_2.png', style={'width': '45%', 'height': '45%'}, className='image-gallery'),
+    html.Img(src='/assets/legend_p8_2.png', style={'width': '35%', 'height': '35%'}, className='image-gallery'),
     html.Br(),
     html.P('"The greener the score, the lower your risk of being bitten by a tick and the better your prevention strategies."', style={'fontSize': '32px','textAlign': 'center','marginTop': '20px','marginBottom': '20px', 'font-weight': 'bold' }),
     html.Br(),
-    html.Hr(className='orange_line'),
+    #html.Hr(className='orange_line'),
     #############
     # SECTION 1 #
     #############
+    
     html.Br(),
     html.Div([
-        html.P(
-            'Potential presence of blacklegged ticks in your environment',
-            style={
-                'fontSize': '40px',
-                'textAlign': 'center',
-                'marginTop': '20px',
-                'marginBottom': '20px',
-                'fontWeight': 'bold'  # optional: makes it more prominent
-            }
-        ),
+        html.Div([
+            html.P(
+                'Potential presence of blacklegged ticks in your environment',
+                style={
+                    'fontSize': '40px',
+                    'textAlign': 'center',
+                    'marginTop': '20px',
+                    'marginBottom': '20px',
+                    'fontWeight': 'bold'
+                }
+            )
+        ], style={
+            'border': '1px solid #FF9636',       # Border color and thickness
+            'borderRadius': '15px',              # Rounded corners
+            'padding': '10px',                   # Space inside the box
+            'backgroundColor': '#FFF3E0',        # Optional: light background
+            'marginLeft': '40px',
+            'marginRight': '40px',
+            'boxShadow': '0px 4px 8px rgba(0, 0, 0, 0.1)'  # Optional: subtle shadow
+        }),
+        html.Br(),
         html.Div([
             build_gauge('gauge1', 0.05, {'grey': [0, 0.1], 'limegreen': [0.1, 1], 'orange': [1, 2], 'red': [2, 3]})
             ], style={'display': 'flex', 'justify-content': 'space-evenly', 'margin-top': '2px'}),
@@ -229,43 +241,63 @@ layout = html.Div([
         ###
         html.Div(id='score_summary', style={'text-align': 'center', 'font-size': '24px', 'margin-top': '30px'}),
         html.Br(),
-        html.Hr(className='orange_line')
+        #html.Hr(className='orange_line')
     ]),
     #############
     # SECTION 2 #
     #############
     html.Div([
-        html.P(
-            'Risk of exposure',
-            style={
-                'fontSize': '40px',
-                'textAlign': 'center',
-                'marginTop': '20px',
-                'marginBottom': '20px',
-                'fontWeight': 'bold'  # optional: makes it more prominent
-            }
-        ),
+        html.Div([
+            html.P(
+                'Risk of exposure',
+                style={
+                    'fontSize': '40px',
+                    'textAlign': 'center',
+                    'marginTop': '20px',
+                    'marginBottom': '20px',
+                    'fontWeight': 'bold'
+                }
+            )
+        ], style={
+            'border': '1px solid #FF9636',       # Border color and thickness
+            'borderRadius': '15px',              # Rounded corners
+            'padding': '10px',                   # Space inside the box
+            'backgroundColor': '#FFF3E0',        # Optional: light background
+            'marginLeft': '40px',
+            'marginRight': '40px',
+            'boxShadow': '0px 4px 8px rgba(0, 0, 0, 0.1)'  # Optional: subtle shadow
+        }),
         html.Div([
             build_gauge('gauge2', 0.05, {'grey': [0, 0.1], 'limegreen': [0.1, 1], 'orange': [1, 2], 'red': [2, 3]})
             ], style={'display': 'flex', 'justify-content': 'space-evenly', 'margin-top': '40px'}),
         html.Div(id='text_report2', style={'marginTop': '50px', 'whiteSpace': 'pre-wrap', 'text-align': 'justify', 'marginLeft': '50px', 'marginRight': '50px'}),
         html.Br(),
-        html.Hr(className='orange_line'),
+        #html.Hr(className='orange_line'),
     ]),
     #############
     # SECTION 3 #
     #############
     html.Div([
-        html.P(
-            'Individual preventive behaviours',
-            style={
-                'fontSize': '40px',
-                'textAlign': 'center',
-                'marginTop': '20px',
-                'marginBottom': '20px',
-                'fontWeight': 'bold'  # optional: makes it more prominent
-            }
-        ),
+        html.Div([
+            html.P(
+                'Individual preventive behaviours',
+                style={
+                    'fontSize': '40px',
+                    'textAlign': 'center',
+                    'marginTop': '20px',
+                    'marginBottom': '20px',
+                    'fontWeight': 'bold'
+                }
+            )
+        ], style={
+            'border': '1px solid #FF9636',       # Border color and thickness
+            'borderRadius': '15px',              # Rounded corners
+            'padding': '10px',                   # Space inside the box
+            'backgroundColor': '#FFF3E0',        # Optional: light background
+            'marginLeft': '40px',
+            'marginRight': '40px',
+            'boxShadow': '0px 4px 8px rgba(0, 0, 0, 0.1)'  # Optional: subtle shadow
+        }),
         html.Div([
             build_gauge('gauge3', 0.05, {'grey': [0, 0.1], 'red': [0.1, 1], 'orange': [1, 2], 'limegreen': [2, 3]})
             ], style={'display': 'flex', 'justify-content': 'space-evenly', 'margin-top': '40px'}),
