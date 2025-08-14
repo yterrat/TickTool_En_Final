@@ -23,19 +23,22 @@ layout = html.Div([
     html.Div([
         html.B('1. I am confident that I can prevent a tick bite.'),
         html.Br(), html.Br(),
-        dcc.Dropdown(
-            options=[
-                {'label': 'Strongly agree', 'value': 'Strongly agree'},
-                {'label': "Somewhat agree", 'value': "Somewhat agree"},
-                {'label': "Neither agree nor disagree", 'value': "Neither agree nor disagree"},
-                {'label': "Somewhat disagree", 'value': "Somewhat disagree"},
-                {'label': "Strongly disagree", 'value': "Strongly disagree"}
-            ],
-            style={'width': '300px'},
-            id='confidence_prevent_tick_bite'
-        )
-    ], style={'font-size': '20px', 'textAlign': 'center'}),
-
+        html.Div(
+            dcc.Dropdown(
+                options=[
+                    {'label': 'Strongly agree', 'value': 'Strongly agree'},
+                    {'label': "Somewhat agree", 'value': "Somewhat agree"},
+                    {'label': "Neither agree nor disagree", 'value': "Neither agree nor disagree"},
+                    {'label': "Somewhat disagree", 'value': "Somewhat disagree"},
+                    {'label': "Strongly disagree", 'value': "Strongly disagree"}
+                ],
+                style={'width': '300px'},
+                id='confidence_prevent_tick_bite'
+            ),
+            style={'display': 'flex', 'justifyContent': 'center'}
+            )
+        ], style={'font-size': '20px'}),
+    
     html.Br(),
     html.Hr(className='grey_blue_line'),
     

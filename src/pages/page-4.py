@@ -52,215 +52,18 @@ layout = html.Div([
     html.Br(),
     #######
     #######
+    #######
+    #######
     html.Div(
         id='visite_area_disease_ticks_questions',
         children=[
             html.Br(),
-            html.Div(
-                id='visiting_Lyme_area',
-                children=[
-                    html.Hr(className='grey_blue_line'),
-                    html.Br(),
-                    html.B("When in known risk areas, how frequently did you adopt the following measures \
-                           to protect yourself, while or after being in a wooded area? ", style={'font-size': '20px'}),
-                    html.Br(),
-                    html.Br(),
-                    html.B("When spending time in risk areas:", style={'font-size': '20px'}),
-                    html.Br(),
-                    html.Br(),
-                    html.Div([
-                        html.Div([
-                            html.Label('Wearing long layers of clothing (e.g., pants, long sleeves).',  style={'font-size': '20px'}),
-                            html.Br(),
-                            html.Br(),
-                            dcc.Dropdown(
-                                options=[
-                                    {'label': 'Never', 'value': 'Never'},
-                                    {'label': 'Rarely', 'value': 'Rarely'},
-                                    {'label': 'Sometimes', 'value': 'Sometimes'},
-                                    {'label': "Most of the time", 'value': "Most of the time"},
-                                    {'label': "Always", 'value': "Always"},
-                                    {'label': "Not applicable", 'value': "Not applicable"}
-                                ],
-                                style={'width': '200px'},
-                                #value='',
-                                id = 'Wearing_long_layers_of_clothing'
-                            )
-                        ], style={'font-size': '15px', 'marginLeft' : '30px'}),
-                        html.Br(),
-                        html.Div([
-                            html.Label('Wearing light-coloured clothing.',  style={'font-size': '20px'}),
-                            html.Br(),
-                            html.Br(),
-                            dcc.Dropdown(
-                                options=[
-                                    {'label': 'Never', 'value': 'Never'},
-                                    {'label': 'Rarely', 'value': 'Rarely'},
-                                    {'label': 'Sometimes', 'value': 'Sometimes'},
-                                    {'label': "Most of the time", 'value': "Most of the time"},
-                                    {'label': "Always", 'value': "Always"},
-                                    {'label': "Not applicable", 'value': "Not applicable"}
-                                ],
-                                style={'width': '200px'},
-                                #value='',
-                                id = 'Wearing_light-coloured_clothing'
-                            )
-                        ], style={'font-size': '15px', 'marginLeft' : '30px'}),
-                        html.Br(),
-                        html.Div([
-                            html.Label('Tucking in clothes',  style={'font-size': '20px'}),
-                            html.Br(),
-                            html.Br(),
-                            dcc.Dropdown(
-                                options=[
-                                    {'label': 'Never', 'value': 'Never'},
-                                    {'label': 'Rarely', 'value': 'Rarely'},
-                                    {'label': 'Sometimes', 'value': 'Sometimes'},
-                                    {'label': "Most of the time", 'value': "Most of the time"},
-                                    {'label': "Always", 'value': "Always"},
-                                    {'label': "Not applicable", 'value': "Not applicable"}
-                                ],
-                                style={'width': '200px'},
-                                #value='',
-                                id = 'Tucking_in_clothes'
-                            )
-                        ], style={'font-size': '15px', 'marginLeft' : '30px'}),
-                        html.Br(),
-                        html.Div([
-                            html.Label('Applying bug repellent containing DEET or icaridin (also known as picaridin) to skin or clothing. ',  style={'font-size': '20px'}),
-                            html.Br(),
-                            html.Br(),
-                            dcc.Dropdown(
-                                options=[
-                                    {'label': 'Never', 'value': 'Never'},
-                                    {'label': 'Rarely', 'value': 'Rarely'},
-                                    {'label': 'Sometimes', 'value': 'Sometimes'},
-                                    {'label': "Most of the time", 'value': "Most of the time"},
-                                    {'label': "Always", 'value': "Always"},
-                                    {'label': "Not applicable", 'value': "Not applicable"}
-                                ],
-                                style={'width': '200px'},
-                                #value='',
-                                id = 'DEET'
-                            )
-                        ], style={'font-size': '15px', 'marginLeft' : '30px'}),
-                        html.Br(),
-                        html.Div([
-                            html.Label('Walking on cleared paths and trails ',  style={'font-size': '20px'}),
-                            html.Br(),
-                            html.Br(),
-                            dcc.Dropdown(
-                                options=[
-                                    {'label': 'Never', 'value': 'Never'},
-                                    {'label': 'Rarely', 'value': 'Rarely'},
-                                    {'label': 'Sometimes', 'value': 'Sometimes'},
-                                    {'label': "Most of the time", 'value': "Most of the time"},
-                                    {'label': "Always", 'value': "Always"},
-                                    {'label': "Not applicable", 'value': "Not applicable"}
-                                ],
-                                style={'width': '200px'},
-                                #value='',
-                                id = 'Walking_on_cleared_paths'
-                            )
-                        ], style={'font-size': '15px', 'marginLeft' : '30px'}),
-                    ]),
-                    html.Br(),
-                    html.B("After being in risk areas:", style={'font-size': '20px'}),
-                    html.Br(),
-                    html.Br(),
-                    html.Div([
-                        html.Div([
-                            html.Label('Examining your clothes to avoid bringing ticks into your home ',  style={'font-size': '20px'}),
-                            html.Br(),
-                            html.Br(),
-                            dcc.Dropdown(
-                                options=[
-                                    {'label': 'Never', 'value': 'Never'},
-                                    {'label': 'Rarely', 'value': 'Rarely'},
-                                    {'label': 'Sometimes', 'value': 'Sometimes'},
-                                    {'label': "Most of the time", 'value': "Most of the time"},
-                                    {'label': "Always", 'value': "Always"},
-                                    {'label': "Not applicable", 'value': "Not applicable"}
-                                ],
-                                style={'width': '200px'},
-                                #value='',
-                                id = 'Examining_your_clothes'
-                            )
-                        ], style={'font-size': '15px', 'marginLeft' : '30px'}),
-                        html.Br(),
-                        html.Div([
-                            html.Label('Putting your clothes in the dryer on high heat to kill ticks',  style={'font-size': '20px'}),
-                            html.Br(),
-                            html.Br(),
-                            dcc.Dropdown(
-                                options=[
-                                    {'label': 'Never', 'value': 'Never'},
-                                    {'label': 'Rarely', 'value': 'Rarely'},
-                                    {'label': 'Sometimes', 'value': 'Sometimes'},
-                                    {'label': "Most of the time", 'value': "Most of the time"},
-                                    {'label': "Always", 'value': "Always"},
-                                    {'label': "Not applicable", 'value': "Not applicable"}
-                                ],
-                                style={'width': '200px'},
-                                #value='',
-                                id = 'clothes_in_the_dryer'
-                            )
-                        ], style={'font-size': '15px', 'marginLeft' : '30px'}),
-                        html.Br(),
-                        html.Div([
-                            html.Label('Examining yourself to find and remove ticks within 24h',  style={'font-size': '20px'}),
-                            html.Br(),
-                            html.Br(),
-                            dcc.Dropdown(
-                                options=[
-                                    {'label': 'Never', 'value': 'Never'},
-                                    {'label': 'Rarely', 'value': 'Rarely'},
-                                    {'label': 'Sometimes', 'value': 'Sometimes'},
-                                    {'label': "Most of the time", 'value': "Most of the time"},
-                                    {'label': "Always", 'value': "Always"},
-                                    {'label': "Not applicable", 'value': "Not applicable"}
-                                ],
-                                style={'width': '200px'},
-                                #value='',
-                                id = 'Examining_yourself'
-                            )
-                        ], style={'font-size': '15px', 'marginLeft' : '30px'}),
-                        html.Br(),
-                        html.Div([
-                            html.Label('Bathing or showering after being in risk areas.',  style={'font-size': '20px'}),
-                            html.Br(),
-                            html.Br(),
-                            dcc.Dropdown(
-                                options=[
-                                    {'label': 'Never', 'value': 'Never'},
-                                    {'label': 'Rarely', 'value': 'Rarely'},
-                                    {'label': 'Sometimes', 'value': 'Sometimes'},
-                                    {'label': "Most of the time", 'value': "Most of the time"},
-                                    {'label': "Always", 'value': "Always"},
-                                    {'label': "Not applicable", 'value': "Not applicable"}
-                                ],
-                                style={'width': '200px'},
-                                #value='',
-                                id = 'Bathing_or_showering'
-                            )
-                        ], style={'font-size': '15px', 'marginLeft' : '30px'}),
-                        html.Br(),
-                    ])
-                ], style={'display':'block'}
-            ),
-        ]),
-    ######
-    ######
-    html.Div(
-        id='no_visite_area_disease_ticks_questions',
-        children=[
+            html.Hr(className='grey_blue_line'),
             html.Br(),
+            html.Div(id="messages", style={'font-size': '20px'}),
             html.Div(
                 id='visiting_Lyme_area',
                 children=[
-                    html.Hr(className='grey_blue_line'),
-                    html.Br(),
-                    html.B("Although you reported not living in or visiting a region when you knew or suspected you could contract Lyme disease or another disease transmitted by ticks, we will ask you about your adoption or preventive behaviour to give you a hypothetical risk level, should ticks emerge in your region or should you move to or visit an area with suitable habitat for Ixodes scapularis ticks.", style={'font-size': '20px'}),
                     html.Br(),
                     html.Br(),
                     html.B("When spending time in risk areas:", style={'font-size': '20px'}),
@@ -447,6 +250,204 @@ layout = html.Div([
                 ], style={'display':'block'}
             ),
         ]),
+    ######
+    ######
+    # html.Div(
+    #     id='no_visite_area_disease_ticks_questions',
+    #     children=[
+    #         html.Br(),
+    #         html.Div(
+    #             id='visiting_Lyme_area',
+    #             children=[
+    #                 html.Hr(className='grey_blue_line'),
+    #                 html.Br(),
+    #                 html.B("Although you reported not living in or visiting a region when you knew or suspected you could contract Lyme disease or another disease transmitted by ticks, we will ask you about your adoption or preventive behaviour to give you a hypothetical risk level, should ticks emerge in your region or should you move to or visit an area with suitable habitat for Ixodes scapularis ticks.", style={'font-size': '20px'}),
+    #                 html.Br(),
+    #                 html.Br(),
+    #                 html.B("When spending time in risk areas:", style={'font-size': '20px'}),
+    #                 html.Br(),
+    #                 html.Br(),
+    #                 html.Div([
+    #                     html.Div([
+    #                         html.Label('Wearing long layers of clothing (e.g., pants, long sleeves).',  style={'font-size': '20px'}),
+    #                         html.Br(),
+    #                         html.Br(),
+    #                         dcc.Dropdown(
+    #                             options=[
+    #                                 {'label': 'Never', 'value': 'Never'},
+    #                                 {'label': 'Rarely', 'value': 'Rarely'},
+    #                                 {'label': 'Sometimes', 'value': 'Sometimes'},
+    #                                 {'label': "Most of the time", 'value': "Most of the time"},
+    #                                 {'label': "Always", 'value': "Always"},
+    #                                 {'label': "Not applicable", 'value': "Not applicable"}
+    #                             ],
+    #                             style={'width': '200px'},
+    #                             #value='',
+    #                             id = 'Wearing_long_layers_of_clothing'
+    #                         )
+    #                     ], style={'font-size': '15px', 'marginLeft' : '30px'}),
+    #                     html.Br(),
+    #                     html.Div([
+    #                         html.Label('Wearing light-coloured clothing.',  style={'font-size': '20px'}),
+    #                         html.Br(),
+    #                         html.Br(),
+    #                         dcc.Dropdown(
+    #                             options=[
+    #                                 {'label': 'Never', 'value': 'Never'},
+    #                                 {'label': 'Rarely', 'value': 'Rarely'},
+    #                                 {'label': 'Sometimes', 'value': 'Sometimes'},
+    #                                 {'label': "Most of the time", 'value': "Most of the time"},
+    #                                 {'label': "Always", 'value': "Always"},
+    #                                 {'label': "Not applicable", 'value': "Not applicable"}
+    #                             ],
+    #                             style={'width': '200px'},
+    #                             #value='',
+    #                             id = 'Wearing_light-coloured_clothing'
+    #                         )
+    #                     ], style={'font-size': '15px', 'marginLeft' : '30px'}),
+    #                     html.Br(),
+    #                     html.Div([
+    #                         html.Label('Tucking in clothes',  style={'font-size': '20px'}),
+    #                         html.Br(),
+    #                         html.Br(),
+    #                         dcc.Dropdown(
+    #                             options=[
+    #                                 {'label': 'Never', 'value': 'Never'},
+    #                                 {'label': 'Rarely', 'value': 'Rarely'},
+    #                                 {'label': 'Sometimes', 'value': 'Sometimes'},
+    #                                 {'label': "Most of the time", 'value': "Most of the time"},
+    #                                 {'label': "Always", 'value': "Always"},
+    #                                 {'label': "Not applicable", 'value': "Not applicable"}
+    #                             ],
+    #                             style={'width': '200px'},
+    #                             #value='',
+    #                             id = 'Tucking_in_clothes'
+    #                         )
+    #                     ], style={'font-size': '15px', 'marginLeft' : '30px'}),
+    #                     html.Br(),
+    #                     html.Div([
+    #                         html.Label('Applying bug repellent containing DEET or icaridin (also known as picaridin) to skin or clothing. ',  style={'font-size': '20px'}),
+    #                         html.Br(),
+    #                         html.Br(),
+    #                         dcc.Dropdown(
+    #                             options=[
+    #                                 {'label': 'Never', 'value': 'Never'},
+    #                                 {'label': 'Rarely', 'value': 'Rarely'},
+    #                                 {'label': 'Sometimes', 'value': 'Sometimes'},
+    #                                 {'label': "Most of the time", 'value': "Most of the time"},
+    #                                 {'label': "Always", 'value': "Always"},
+    #                                 {'label': "Not applicable", 'value': "Not applicable"}
+    #                             ],
+    #                             style={'width': '200px'},
+    #                             #value='',
+    #                             id = 'DEET'
+    #                         )
+    #                     ], style={'font-size': '15px', 'marginLeft' : '30px'}),
+    #                     html.Br(),
+    #                     html.Div([
+    #                         html.Label('Walking on cleared paths and trails ',  style={'font-size': '20px'}),
+    #                         html.Br(),
+    #                         html.Br(),
+    #                         dcc.Dropdown(
+    #                             options=[
+    #                                 {'label': 'Never', 'value': 'Never'},
+    #                                 {'label': 'Rarely', 'value': 'Rarely'},
+    #                                 {'label': 'Sometimes', 'value': 'Sometimes'},
+    #                                 {'label': "Most of the time", 'value': "Most of the time"},
+    #                                 {'label': "Always", 'value': "Always"},
+    #                                 {'label': "Not applicable", 'value': "Not applicable"}
+    #                             ],
+    #                             style={'width': '200px'},
+    #                             #value='',
+    #                             id = 'Walking_on_cleared_paths'
+    #                         )
+    #                     ], style={'font-size': '15px', 'marginLeft' : '30px'}),
+    #                 ]),
+    #                 html.Br(),
+    #                 html.B("After being in risk areas:", style={'font-size': '20px'}),
+    #                 html.Br(),
+    #                 html.Br(),
+    #                 html.Div([
+    #                     html.Div([
+    #                         html.Label('Examining your clothes to avoid bringing ticks into your home ',  style={'font-size': '20px'}),
+    #                         html.Br(),
+    #                         html.Br(),
+    #                         dcc.Dropdown(
+    #                             options=[
+    #                                 {'label': 'Never', 'value': 'Never'},
+    #                                 {'label': 'Rarely', 'value': 'Rarely'},
+    #                                 {'label': 'Sometimes', 'value': 'Sometimes'},
+    #                                 {'label': "Most of the time", 'value': "Most of the time"},
+    #                                 {'label': "Always", 'value': "Always"},
+    #                                 {'label': "Not applicable", 'value': "Not applicable"}
+    #                             ],
+    #                             style={'width': '200px'},
+    #                             #value='',
+    #                             id = 'Examining_your_clothes'
+    #                         )
+    #                     ], style={'font-size': '15px', 'marginLeft' : '30px'}),
+    #                     html.Br(),
+    #                     html.Div([
+    #                         html.Label('Putting your clothes in the dryer on high heat to kill ticks',  style={'font-size': '20px'}),
+    #                         html.Br(),
+    #                         html.Br(),
+    #                         dcc.Dropdown(
+    #                             options=[
+    #                                 {'label': 'Never', 'value': 'Never'},
+    #                                 {'label': 'Rarely', 'value': 'Rarely'},
+    #                                 {'label': 'Sometimes', 'value': 'Sometimes'},
+    #                                 {'label': "Most of the time", 'value': "Most of the time"},
+    #                                 {'label': "Always", 'value': "Always"},
+    #                                 {'label': "Not applicable", 'value': "Not applicable"}
+    #                             ],
+    #                             style={'width': '200px'},
+    #                             #value='',
+    #                             id = 'clothes_in_the_dryer'
+    #                         )
+    #                     ], style={'font-size': '15px', 'marginLeft' : '30px'}),
+    #                     html.Br(),
+    #                     html.Div([
+    #                         html.Label('Examining yourself to find and remove ticks within 24h',  style={'font-size': '20px'}),
+    #                         html.Br(),
+    #                         html.Br(),
+    #                         dcc.Dropdown(
+    #                             options=[
+    #                                 {'label': 'Never', 'value': 'Never'},
+    #                                 {'label': 'Rarely', 'value': 'Rarely'},
+    #                                 {'label': 'Sometimes', 'value': 'Sometimes'},
+    #                                 {'label': "Most of the time", 'value': "Most of the time"},
+    #                                 {'label': "Always", 'value': "Always"},
+    #                                 {'label': "Not applicable", 'value': "Not applicable"}
+    #                             ],
+    #                             style={'width': '200px'},
+    #                             #value='',
+    #                             id = 'Examining_yourself'
+    #                         )
+    #                     ], style={'font-size': '15px', 'marginLeft' : '30px'}),
+    #                     html.Br(),
+    #                     html.Div([
+    #                         html.Label('Bathing or showering after being in risk areas.',  style={'font-size': '20px'}),
+    #                         html.Br(),
+    #                         html.Br(),
+    #                         dcc.Dropdown(
+    #                             options=[
+    #                                 {'label': 'Never', 'value': 'Never'},
+    #                                 {'label': 'Rarely', 'value': 'Rarely'},
+    #                                 {'label': 'Sometimes', 'value': 'Sometimes'},
+    #                                 {'label': "Most of the time", 'value': "Most of the time"},
+    #                                 {'label': "Always", 'value': "Always"},
+    #                                 {'label': "Not applicable", 'value': "Not applicable"}
+    #                             ],
+    #                             style={'width': '200px'},
+    #                             #value='',
+    #                             id = 'Bathing_or_showering'
+    #                         )
+    #                     ], style={'font-size': '15px', 'marginLeft' : '30px'}),
+    #                     html.Br(),
+    #                 ])
+    #             ], style={'display':'block'}
+    #         ),
+    #     ]),
     ######
     ######
     ######
@@ -547,39 +548,41 @@ def set_dropdown_value(data):
     )
 
 @callback(
-    Output(component_id='visite_area_disease_ticks_questions', component_property='hidden'),
-    [Input(component_id='visite_area_disease_ticks', component_property='value')])
+    Output('messages', 'children'),
+    Input('visite_area_disease_ticks', 'value'),
+    prevent_initial_call=True,
+    )
 
-def show_hide_element_visite_area_disease_ticks(visite_area_disease_ticks):
+def specific_message(visite_area_disease_ticks):
+    print(visite_area_disease_ticks)
     if visite_area_disease_ticks == 'yes':
-        return False
+        return "When in known risk areas, how frequently did you adopt the following measures to protect yourself, while or after being in a wooded area? "
     else:
-        return True
-    
-    
-@callback(
-    Output(component_id='no_visite_area_disease_ticks_questions', component_property='hidden'),
-    [Input(component_id='visite_area_disease_ticks', component_property='value')])
+        return "Although you reported not living in or visiting a region when you knew or suspected you could contract Lyme disease or another disease transmitted by ticks, we will ask you about your adoption or preventive behaviour to give you a hypothetical risk level, should ticks emerge in your region or should you move to or visit an area with suitable habitat for Ixodes scapularis ticks"
 
-def show_hide_element_visite_area_disease_ticks(visite_area_disease_ticks):
-    if visite_area_disease_ticks == 'no' or visite_area_disease_ticks == "I don't know" :
-        return False
-    else:
-        return True
+# @callback(
+#     Output('message', 'children'),
+#     Input('record_answers', 'data'),
+#     prevent_initial_call=True
+#     )
 
-
+# def choose_sentence(data):
+#     if data.get('visite_area_disease_ticks') == 'yes' :
+#         return "When in known risk areas, how frequently did you adopt the following measures to protect yourself, while or after being in a wooded area? "
+#     else :
+#         return "Although you reported not living in or visiting a region when you knew or suspected you could contract Lyme disease or another disease transmitted by ticks, we will ask you about your adoption or preventive behaviour to give you a hypothetical risk level, should ticks emerge in your region or should you move to or visit an area with suitable habitat for Ixodes scapularis ticks"
 
 # @callback(
 #     [Output('visite_area_disease_ticks', 'value'),
-#      Output('Wearing_long_layers_of_clothing', 'value'),
-#      Output('Wearing_light-coloured_clothing', 'value'),
-#      Output('Tucking_in_clothes', 'value'),
-#      Output('DEET', 'value'),
-#      Output('Walking_on_cleared_paths', 'value'),
-#      Output('Examining_your_clothes', 'value'),
-#      Output('clothes_in_the_dryer', 'value'),
-#      Output('Examining_yourself', 'value'),
-#      Output('Bathing_or_showering', 'value')
+#       Output('Wearing_long_layers_of_clothing', 'value'),
+#       Output('Wearing_light-coloured_clothing', 'value'),
+#       Output('Tucking_in_clothes', 'value'),
+#       Output('DEET', 'value'),
+#       Output('Walking_on_cleared_paths', 'value'),
+#       Output('Examining_your_clothes', 'value'),
+#       Output('clothes_in_the_dryer', 'value'),
+#       Output('Examining_yourself', 'value'),
+#       Output('Bathing_or_showering', 'value')
 #     ],
 #     Input('url', 'pathname'),
 #     State('record_answers', 'data')
@@ -589,18 +592,47 @@ def show_hide_element_visite_area_disease_ticks(visite_area_disease_ticks):
 #     if not data:
 #         return [None, None]
 #     return [
-#      data.get('visite_area_disease_ticks', None),
-#      data.get('Wearing_long_layers_of_clothing', None),
-#      data.get('Wearing_light-coloured_clothing', None),
-#      data.get('Tucking_in_clothes', None),
-#      data.get('DEET', None),
-#      data.get('Walking_on_cleared_paths', None),
-#      data.get('Examining_your_clothes', None),
-#      data.get('clothes_in_the_dryer', None),
-#      data.get('Examining_yourself', None),
-#      data.get('Bathing_or_showering', None),
-#      ]
-         
+#       data.get('visite_area_disease_ticks', None),
+#       data.get('Wearing_long_layers_of_clothing', None),
+#       data.get('Wearing_light-coloured_clothing', None),
+#       data.get('Tucking_in_clothes', None),
+#       data.get('DEET', None),
+#       data.get('Walking_on_cleared_paths', None),
+#       data.get('Examining_your_clothes', None),
+#       data.get('clothes_in_the_dryer', None),
+#       data.get('Examining_yourself', None),
+#       data.get('Bathing_or_showering', None),
+#       ]
+
+
+# @callback(
+#     Output(component_id='visite_area_disease_ticks_questions', component_property='hidden'),
+#     [Input(component_id='visite_area_disease_ticks', component_property='value')])
+
+# def show_hide_element_visite_area_disease_ticks_1(visite_area_disease_ticks):
+#     if visite_area_disease_ticks == 'yes':
+#         return False
+#     else:
+#         return True
+    
+    
+# @callback(
+#     Output(component_id='no_visite_area_disease_ticks_questions', component_property='hidden'),
+#     [Input(component_id='visite_area_disease_ticks', component_property='value')])
+
+# def show_hide_element_visite_area_disease_ticks_2(visite_area_disease_ticks):
+#     if visite_area_disease_ticks == 'no' or visite_area_disease_ticks == "I don't know" :
+#         return False
+#     else:
+#         return True
+
+
+
+
+
+
+#######
+
  
 # @callback(
 #     Output('display-answers4', 'children'),

@@ -134,7 +134,7 @@ def build_gauge_figure(value, color_ranges):
                 'tickvals': [0.6, 1.5, 2.4],
                 'ticktext': ticktext,
                 'tickangle': 0,
-                'tickfont': {'size': 18},
+                'tickfont': {'size': 16},
             },
             'bar': {'color': 'black', 'thickness': 0.2},
             'steps': steps,
@@ -151,7 +151,7 @@ def build_gauge_figure(value, color_ranges):
 
     # If invalid data, add visible warning
     if value == 0.05:
-        layout_config["margin"] = dict(t=10, b=180, l=40, r=40)
+        layout_config["margin"] = dict(t=100, b=100, l=1000, r=150)
         layout_config["annotations"] = [
             dict(
                 text=(
@@ -200,7 +200,7 @@ layout = html.Div([
     html.Br(),
     html.P("Here is a legend that will help you understand the meaning of the colors :", style={'fontSize': '20px','textAlign': 'center','marginTop': '20px','marginBottom': '20px'  }),
     html.Br(),
-    html.Img(src='/assets/legend_p8_2.png', style={'width': '35%', 'height': '35%'}, className='image-gallery'),
+    html.Img(src='/assets/legend_p8_2.png', style={'width': '30%', 'height': '30%'}, className='image-gallery'),
     html.Br(),
     html.P('"The greener the score, the lower your risk of being bitten by a tick and the better your prevention strategies."', style={'fontSize': '32px', 'textDecoration': 'underline','textAlign': 'center','marginTop': '20px','marginBottom': '20px', 'font-weight': 'bold' }),
     html.Br(),
