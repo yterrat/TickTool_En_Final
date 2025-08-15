@@ -134,7 +134,7 @@ def build_gauge_figure(value, color_ranges):
                 'tickvals': [0.6, 1.5, 2.4],
                 'ticktext': ticktext,
                 'tickangle': 0,
-                'tickfont': {'size': 16},
+                'tickfont': {'size': 18},
             },
             'bar': {'color': 'black', 'thickness': 0.2},
             'steps': steps,
@@ -151,7 +151,7 @@ def build_gauge_figure(value, color_ranges):
 
     # If invalid data, add visible warning
     if value == 0.05:
-        layout_config["margin"] = dict(t=0, b=0, l=0, r=0)
+        layout_config["margin"] = dict(t=40, b=140, l=40, r=40)
         layout_config["annotations"] = [
             dict(
                 text=(
@@ -164,7 +164,7 @@ def build_gauge_figure(value, color_ranges):
                 xref='paper',
                 yref='paper',
                 showarrow=False,
-                font=dict(size=20, color="black"),
+                font=dict(size=14, color="black"),
                 align='center',
                 xanchor='center',
                 yanchor='top',
@@ -181,7 +181,7 @@ def build_gauge_figure(value, color_ranges):
 # Function to build the full Dash component
 def build_gauge(gauge_id, value, color_ranges):
     fig = build_gauge_figure(value, color_ranges)
-    return dcc.Graph(id=gauge_id, figure=fig, style={'height': '400px', 'width': '400px'})
+    return dcc.Graph(id=gauge_id, figure=fig, style={'height': '400px', 'width': '400x'})
 
 
 #######
