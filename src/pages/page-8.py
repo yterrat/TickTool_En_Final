@@ -151,7 +151,7 @@ def build_gauge_figure(value, color_ranges):
 
     # If invalid data, add visible warning
     if value == 0.05:
-        layout_config["margin"] = dict(t=100, b=100, l=1000, r=150)
+        layout_config["margin"] = dict(t=0, b=0, l=0, r=0)
         layout_config["annotations"] = [
             dict(
                 text=(
@@ -181,7 +181,7 @@ def build_gauge_figure(value, color_ranges):
 # Function to build the full Dash component
 def build_gauge(gauge_id, value, color_ranges):
     fig = build_gauge_figure(value, color_ranges)
-    return dcc.Graph(id=gauge_id, figure=fig, style={'height': '500px', 'width': '500px'})
+    return dcc.Graph(id=gauge_id, figure=fig, style={'height': '400px', 'width': '400px'})
 
 
 #######
@@ -290,7 +290,7 @@ layout = html.Div([
                     style={
                         "fontSize": "18px",
                         "textAlign": "justify",  
-                        "maxWidth": "1500px",    
+                        "maxWidth": "1100px",    
                     }
                 ),
             ],
