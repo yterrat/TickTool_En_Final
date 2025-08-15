@@ -6,6 +6,7 @@ from dash import dcc, html, Input, Output, callback, State
 import random
 import plotly.graph_objs as go
 import uuid
+import logging
 
 dash.register_page(__name__, path='/')
 
@@ -23,6 +24,9 @@ def get_initial_state():
     }
 
 def build_gauge(gauge_id, value, color_ranges, tickvals, ticktext):
+    # Ensure value is within valid range
+    value = max(0, min(3, float(value)))
+    
     fig = go.Figure(go.Indicator(
         mode="gauge",
         value=value,
@@ -40,9 +44,27 @@ def build_gauge(gauge_id, value, color_ranges, tickvals, ticktext):
         domain={'x': [0, 1], 'y': [0, 1]},
         number={'valueformat': '.2f', 'font': {'color': 'rgba(0,0,0,0)'}}
     ))
-    fig.update_traces(delta={'increasing': {'color': "green"}, 'decreasing': {'color': "red"}},
-                      value=value)
-    return dcc.Graph(id=gauge_id, figure=fig, style={'height': '500px', 'width': '500px'})
+    
+    # Simplified update_traces to avoid potential issues
+    fig.update_traces(value=value)
+    
+    # Set layout config for better deployment compatibility
+    fig.update_layout(
+        margin=dict(l=20, r=20, t=20, b=20),
+        autosize=True,
+        font=dict(family="Arial, sans-serif")
+    )
+    
+    return dcc.Graph(
+        id=gauge_id, 
+        figure=fig, 
+        style={'height': '500px', 'width': '500px'},
+        config={
+            'displayModeBar': False,
+            'staticPlot': False,
+            'responsive': True
+        }
+    )
 
 layout = html.Div([
     html.Img(src='/assets/TickTOOL_logo.png', style={'width': '40%', 'height': '40%'}, className='image-gallery'),
@@ -82,13 +104,9 @@ layout = html.Div([
     )
     ]),
 
-    
-    
-    
-    
     html.Br(),
     html.Div([
-    html.Div([
+        html.Div([
             html.P('Potential for blacklegged ticks in environment', style={'font-size': '25px', "font-weight": "bold", 'textAlign': 'center'}),
             build_gauge('gauge_in1', 0.0, {
                 'grey': [0, 0.1], 'limegreen': [0.1, 1], 'orange': [1, 2], 'red': [2, 3]
@@ -115,36 +133,6 @@ layout = html.Div([
         'marginTop': '40px'
     }),
 
-    # html.Div([
-    #     html.P('Potential for BLT in environment', style={'font-size': '25px', "font-weight": "bold"}),
-    #     html.P('Risk of exposure', style={'font-size': '25px', "font-weight": "bold"}),
-    #     html.P('Level of preventive behaviours', style={'font-size': '25px', "font-weight": "bold"})
-    # ], style={
-    #     'display': 'flex',
-    #     'justify-content': 'space-evenly',
-    #     'align-items': 'center',
-    #     'margin-top': '20px'
-    # }),
-
-    # html.Div([
-    #     build_gauge('gauge_in1', 0.0, {
-    #         'grey': [0, 0.1], 'limegreen': [0.1, 1], 'orange': [1, 2], 'red': [2, 3]
-    #     }, [0.6, 1.5, 2.4], ['Low', 'Moderate', 'High']),
-
-    #     build_gauge('gauge_in2', 0.0, {
-    #         'grey': [0, 0.1], 'limegreen': [0.1, 1], 'orange': [1, 2], 'red': [2, 3]
-    #     }, [0.6, 1.5, 2.4], ['Low', 'Moderate', 'High']),
-
-    #     build_gauge('gauge_in3', 0.0, {
-    #         'grey': [0, 0.1], 'red': [0.1, 1], 'orange': [1, 2], 'limegreen': [2, 3]
-    #     }, [0.6, 1.5, 2.4], ['Low', 'Moderate', 'High'])
-    # ], style={
-    #     'display': 'flex',
-    #     'justify-content': 'space-evenly',
-    #     'align-items': 'center',
-    #     'margin-top': '40px',
-    # }),
-
     html.Br(),
     html.Div(dcc.Link("Begin the questionnaire and get your scores and personalized report", href='/page-2', style={
         'font-size': '20px',
@@ -161,112 +149,187 @@ layout = html.Div([
     html.Img(src='/assets/UdeM.png', style={'width': '20%', 'height': '20%'}, className='image-gallery'),
     html.Br(), html.Br(),
     
-    # Initialize state store
-    dcc.Store(id='gauge-state', data=get_initial_state()),
+    # Initialize state store with suppress_callback_exceptions compatibility
+    dcc.Store(id='gauge-state', data=get_initial_state(), storage_type='memory'),
     
-    # Multiple intervals with different intervals to ensure one works
-    dcc.Interval(id='interval-primary', interval=100, n_intervals=0, disabled=False),
-    dcc.Interval(id='interval-backup', interval=150, n_intervals=0, disabled=True),
+    # Single interval with longer interval for server deployment
+    dcc.Interval(
+        id='interval-component', 
+        interval=200,  # Increased interval for server stability
+        n_intervals=0, 
+        disabled=False,
+        max_intervals=-1  # Run indefinitely
+    ),
     
-    # Hidden div to store animation status
+    # Hidden div to store animation status for debugging
     html.Div(id='animation-status', style={'display': 'none'}),
 ])
 
-# Primary callback with error handling
+def update_gauge_value(gauge_data):
+    """Update function for individual gauge values"""
+    try:
+        current = float(gauge_data.get("current", 0.0))
+        target = float(gauge_data.get("target", 0.6))
+        wait = int(gauge_data.get("wait", 0))
+        has_left_zero = bool(gauge_data.get("has_left_zero", False))
+
+        if wait > 0:
+            return {
+                "current": current, 
+                "target": target, 
+                "wait": wait - 1, 
+                "has_left_zero": has_left_zero
+            }
+
+        if abs(current - target) < step_size:
+            if not has_left_zero and target > 0:
+                has_left_zero = True
+            
+            # Select new target
+            possible_values = [v for v in allowed_values if v != target and (has_left_zero or v > 0)]
+            if not possible_values:
+                possible_values = [v for v in allowed_values if v != target]
+            
+            new_target = random.choice(possible_values) if possible_values else target
+            
+            return {
+                "current": round(target, 2), 
+                "target": new_target, 
+                "wait": pause_ticks, 
+                "has_left_zero": has_left_zero
+            }
+        else:
+            direction = 1 if target > current else -1
+            new_current = current + direction * step_size
+            new_current = max(0, min(3, round(new_current, 2)))  # Clamp to valid range
+            
+            return {
+                "current": new_current, 
+                "target": target, 
+                "wait": 0, 
+                "has_left_zero": has_left_zero
+            }
+    except Exception as e:
+        logging.error(f"Error in update_gauge_value: {e}")
+        return gauge_data  # Return unchanged data on error
+
+def create_gauge_figure(current_value, color_ranges, tickvals, ticktext):
+    """Create gauge figure with error handling"""
+    try:
+        current_value = max(0, min(3, float(current_value)))
+        
+        fig = go.Figure(go.Indicator(
+            mode="gauge",
+            value=current_value,
+            gauge={
+                'axis': {
+                    'range': [0, 3],
+                    'tickvals': tickvals,
+                    'ticktext': ticktext,
+                    'tickangle': 0,
+                    'tickfont': {'size': 18},
+                },
+                'bar': {'color': 'black', 'thickness': 0.2},
+                'steps': [{'range': rng, 'color': clr} for clr, rng in color_ranges.items()],
+            },
+            domain={'x': [0, 1], 'y': [0, 1]},
+            number={'valueformat': '.2f', 'font': {'color': 'rgba(0,0,0,0)'}}
+        ))
+        
+        fig.update_layout(
+            margin=dict(l=20, r=20, t=20, b=20),
+            autosize=True,
+            font=dict(family="Arial, sans-serif"),
+            paper_bgcolor='rgba(0,0,0,0)',
+            plot_bgcolor='rgba(0,0,0,0)'
+        )
+        
+        return fig
+    except Exception as e:
+        logging.error(f"Error creating gauge figure: {e}")
+        # Return a basic figure on error
+        return go.Figure()
+
+# Simplified callback with better error handling
 @callback(
     [Output('gauge_in1', 'figure'),
      Output('gauge_in2', 'figure'),
      Output('gauge_in3', 'figure'),
      Output('gauge-state', 'data'),
-     Output('interval-backup', 'disabled'),
      Output('animation-status', 'children')],
-    [Input('interval-primary', 'n_intervals'),
-     Input('interval-backup', 'n_intervals')],
+    [Input('interval-component', 'n_intervals')],
     [State('gauge-state', 'data')],
     prevent_initial_call=False
 )
-def animate_gauges(n1, n2, state):
+def animate_gauges(n_intervals, state):
     try:
-        # Initialize state if None
-        if state is None:
+        # Initialize state if None or invalid
+        if state is None or not isinstance(state, dict):
             state = get_initial_state()
-        
-        # Determine which interval triggered (primary or backup)
-        ctx = dash.callback_context
-        if not ctx.triggered:
-            trigger_id = 'interval-primary'
-        else:
-            trigger_id = ctx.triggered[0]['prop_id'].split('.')[0]
-        
-        # Enable backup if primary isn't working well
-        backup_disabled = True
-        if trigger_id == 'interval-primary' and n1 > 10:
-            backup_disabled = False
-        
-        def update_value(gauge_data):
-            current = gauge_data.get("current", 0.0)
-            target = gauge_data.get("target", 0.6)
-            wait = gauge_data.get("wait", 0)
-            has_left_zero = gauge_data.get("has_left_zero", False)
+            
+        # Ensure all gauge data exists
+        for gauge_key in ['gauge_in1', 'gauge_in2', 'gauge_in3']:
+            if gauge_key not in state:
+                state[gauge_key] = {"current": 0.0, "target": 0.6, "wait": 0, "has_left_zero": False}
 
-            if wait > 0:
-                return {"current": current, "target": target, "wait": max(0, wait - 1), "has_left_zero": has_left_zero}
-
-            if abs(current - target) < step_size:
-                if not has_left_zero and target > 0:
-                    has_left_zero = True
-                possible_values = [v for v in allowed_values if v != target and (has_left_zero or v > 0)]
-                if possible_values:
-                    new_target = random.choice(possible_values)
-                else:
-                    new_target = random.choice([v for v in allowed_values if v != target])
-                return {"current": round(target, 2), "target": new_target, "wait": pause_ticks, "has_left_zero": has_left_zero}
-            else:
-                direction = 1 if target > current else -1
-                new_current = round(current + direction * step_size, 2)
-                new_current = max(0, min(3, new_current))  # Clamp to valid range
-                return {"current": new_current, "target": target, "wait": 0, "has_left_zero": has_left_zero}
-
-        # Update state
+        # Update each gauge
         updated_state = state.copy()
-        updated_state["gauge_in1"] = update_value(state.get("gauge_in1", {}))
-        updated_state["gauge_in2"] = update_value(state.get("gauge_in2", {}))
-        updated_state["gauge_in3"] = update_value(state.get("gauge_in3", {}))
+        updated_state["gauge_in1"] = update_gauge_value(state["gauge_in1"])
+        updated_state["gauge_in2"] = update_gauge_value(state["gauge_in2"])
+        updated_state["gauge_in3"] = update_gauge_value(state["gauge_in3"])
 
-        # Build figures
-        fig1 = build_gauge('gauge_in1', updated_state["gauge_in1"]["current"],
-                           {'grey': [0, 0.1], 'limegreen': [0.1, 1], 'orange': [1, 2], 'red': [2, 3]},
-                           [0.6, 1.5, 2.4], ['Low', 'Moderate', 'High']).figure
+        # Create figures
+        fig1 = create_gauge_figure(
+            updated_state["gauge_in1"]["current"],
+            {'grey': [0, 0.1], 'limegreen': [0.1, 1], 'orange': [1, 2], 'red': [2, 3]},
+            [0.6, 1.5, 2.4], ['Low', 'Moderate', 'High']
+        )
 
-        fig2 = build_gauge('gauge_in2', updated_state["gauge_in2"]["current"],
-                           {'grey': [0, 0.1], 'limegreen': [0.1, 1], 'orange': [1, 2], 'red': [2, 3]},
-                           [0.6, 1.5, 2.4], ['Low', 'Moderate', 'High']).figure
+        fig2 = create_gauge_figure(
+            updated_state["gauge_in2"]["current"],
+            {'grey': [0, 0.1], 'limegreen': [0.1, 1], 'orange': [1, 2], 'red': [2, 3]},
+            [0.6, 1.5, 2.4], ['Low', 'Moderate', 'High']
+        )
 
-        fig3 = build_gauge('gauge_in3', updated_state["gauge_in3"]["current"],
-                           {'grey': [0, 0.1], 'red': [0.1, 1], 'orange': [1, 2], 'limegreen': [2, 3]},
-                           [0.6, 1.5, 2.4], ['Low', 'Moderate', 'High']).figure
+        fig3 = create_gauge_figure(
+            updated_state["gauge_in3"]["current"],
+            {'grey': [0, 0.1], 'red': [0.1, 1], 'orange': [1, 2], 'limegreen': [2, 3]},
+            [0.6, 1.5, 2.4], ['Low', 'Moderate', 'High']
+        )
 
-        status = f"Animation running - Trigger: {trigger_id}, Count: {n1 if trigger_id == 'interval-primary' else n2}"
+        status = f"Animation running - Interval: {n_intervals}"
         
-        return fig1, fig2, fig3, updated_state, backup_disabled, status
+        return fig1, fig2, fig3, updated_state, status
 
     except Exception as e:
-        # Fallback in case of error
-        print(f"Error in animation callback: {e}")
+        logging.error(f"Error in animate_gauges callback: {e}")
+        
+        # Fallback: return static gauges
         if state is None:
             state = get_initial_state()
         
-        # Return static gauges with current state
-        fig1 = build_gauge('gauge_in1', state.get("gauge_in1", {}).get("current", 0.0),
-                           {'grey': [0, 0.1], 'limegreen': [0.1, 1], 'orange': [1, 2], 'red': [2, 3]},
-                           [0.6, 1.5, 2.4], ['Low', 'Moderate', 'High']).figure
+        try:
+            fig1 = create_gauge_figure(
+                state.get("gauge_in1", {}).get("current", 0.0),
+                {'grey': [0, 0.1], 'limegreen': [0.1, 1], 'orange': [1, 2], 'red': [2, 3]},
+                [0.6, 1.5, 2.4], ['Low', 'Moderate', 'High']
+            )
 
-        fig2 = build_gauge('gauge_in2', state.get("gauge_in2", {}).get("current", 0.0),
-                           {'grey': [0, 0.1], 'limegreen': [0.1, 1], 'orange': [1, 2], 'red': [2, 3]},
-                           [0.6, 1.5, 2.4], ['Low', 'Moderate', 'High']).figure
+            fig2 = create_gauge_figure(
+                state.get("gauge_in2", {}).get("current", 0.0),
+                {'grey': [0, 0.1], 'limegreen': [0.1, 1], 'orange': [1, 2], 'red': [2, 3]},
+                [0.6, 1.5, 2.4], ['Low', 'Moderate', 'High']
+            )
 
-        fig3 = build_gauge('gauge_in3', state.get("gauge_in3", {}).get("current", 0.0),
-                           {'grey': [0, 0.1], 'red': [0.1, 1], 'orange': [1, 2], 'limegreen': [2, 3]},
-                           [0.6, 1.5, 2.4], ['Low', 'Moderate', 'High']).figure
+            fig3 = create_gauge_figure(
+                state.get("gauge_in3", {}).get("current", 0.0),
+                {'grey': [0, 0.1], 'red': [0.1, 1], 'orange': [1, 2], 'limegreen': [2, 3]},
+                [0.6, 1.5, 2.4], ['Low', 'Moderate', 'High']
+            )
 
-        return fig1, fig2, fig3, state, True, f"Error: {str(e)}"
+            return fig1, fig2, fig3, state, f"Error recovered: {str(e)[:100]}"
+        
+        except Exception as fallback_error:
+            # Ultimate fallback
+            empty_fig = go.Figure()
+            return empty_fig, empty_fig, empty_fig, get_initial_state(), f"Critical error: {str(fallback_error)[:100]}"
