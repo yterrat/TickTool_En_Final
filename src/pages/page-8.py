@@ -194,13 +194,117 @@ layout = html.Div([
     html.Img(src='/assets/TickTOOL_logo.png', style={'width': '40%', 'height': '40%'}, className='image-gallery'),
     html.Hr(className='orange_line'),
     html.Br(),
+    ######
+    ######
     html.Div([
         html.B('Your personalized report', style={'font-size': '60px'})
     ], style={'text-align': 'center'}),
     html.Br(),
     html.P("Here is a legend that will help you understand the meaning of the colors :", style={'fontSize': '20px','textAlign': 'center','marginTop': '20px','marginBottom': '20px'  }),
     html.Br(),
-    html.Img(src='/assets/legend_p8_2.png', style={'width': '30%', 'height': '30%'}, className='image-gallery'),
+    html.Div([
+        # GREEN
+        html.Div(
+            [
+                html.Div(
+                    style={
+                        "width": "150px",
+                        "height": "75px",
+                        "backgroundColor": "limegreen",
+                        "border": "4px solid black",
+                        "borderRadius": "20px",
+                        "flexShrink": 0,  # prevent resizing
+                    }
+                ),
+                html.Span("Low level of risk", style={"fontSize": '28px'}),
+            ],
+            style={"display": "flex", "alignItems": "center", "gap": "12px"},
+        ),
+    
+        html.Br(),
+    
+        # ORANGE
+        html.Div(
+            [
+                html.Div(
+                    style={
+                        "width": "150px",
+                        "height": "75px",
+                        "backgroundColor": "orange",
+                        "border": "4px solid black",
+                        "borderRadius": "20px",
+                        "flexShrink": 0,
+                    }
+                ),
+                html.Span("Medium level of risk", style={"fontSize": '28px'}),
+            ],
+            style={"display": "flex", "alignItems": "center", "gap": "12px"},
+        ),
+    
+        html.Br(),
+    
+        # RED
+        html.Div(
+            [
+                html.Div(
+                    style={
+                        "width": "150px",
+                        "height": "75px",
+                        "backgroundColor": "red",
+                        "border": "4px solid black",
+                        "borderRadius": "20px",
+                        "flexShrink": 0,
+                    }
+                ),
+                html.Span("High level of risk", style={"fontSize": '28px'}),
+            ],
+            style={"display": "flex", "alignItems": "center", "gap": "12px"},
+        ),
+    
+        html.Br(),
+    
+        # GREY 
+        html.Div(
+            [
+                html.Div(
+                    style={
+                        "width": "150px",
+                        "height": "75px",
+                        "backgroundColor": "grey",
+                        "border": "4px solid black",
+                        "borderRadius": "20px",
+                        "flexShrink": 0,
+                    }
+                ),
+                html.Span(
+                    [
+                        "We couldn’t assess your risk level, either due to an incomplete response, or because data for your postal code are unavailable. This doesn’t mean the risk is low — just that we don’t have enough information. You can consult ",
+                        html.A(
+                            "etick.ca",
+                            href="https://www.etick.ca",
+                            target="_blank",
+                            style={"color": "blue", "textDecoration": "underline"}
+                        ),
+                        " to find out if Ixodes scapularis (or other) ticks have been submitted from your region."
+                    ],
+                    style={
+                        "fontSize": "18px",
+                        "textAlign": "justify",  
+                        "maxWidth": "1500px",    
+                    }
+                ),
+            ],
+            style={
+                "display": "flex",
+                "alignItems": "flex-start",
+                "gap": "12px",
+            },
+        )
+        ],style={"marginLeft": "200px", "marginRight": "200px"}
+    ),
+    ######
+    ######
+    html.Br(),
     html.Br(),
     html.P('"The greener the score, the lower your risk of being bitten by a tick and the better your prevention strategies."', style={'fontSize': '32px', 'textDecoration': 'underline','textAlign': 'center','marginTop': '20px','marginBottom': '20px', 'font-weight': 'bold' }),
     html.Br(),
@@ -223,10 +327,10 @@ layout = html.Div([
                 }
             )
         ], style={
-            'border': '1px solid #FF9636',       # Border color and thickness
-            'borderRadius': '15px',              # Rounded corners
-            'padding': '10px',                   # Space inside the box
-            'backgroundColor': '#FFF3E0',        # Optional: light background
+            'border': '1px solid #FF9636',       
+            'borderRadius': '15px',              
+            'padding': '10px',                   
+            'backgroundColor': '#FFF3E0',        
             'marginLeft': '40px',
             'marginRight': '40px',
             'boxShadow': '0px 4px 8px rgba(0, 0, 0, 0.1)'  # Optional: subtle shadow
