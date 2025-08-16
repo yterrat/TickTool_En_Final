@@ -643,19 +643,19 @@ def calculat_score_and_record_answers(data):
                                     and data['How_many_freely_moving_on_your_skin'] != "0":
                                 score1 = 2.4
                 else:
-                    if data['access_courtyard'] == "Yes" :
-                        if(data['courtyard_herbaceous_or_forest'] == 'Yes'):
+                    if data['access_courtyard'] == "yes" :
+                        if(data['courtyard_herbaceous_or_forest'] == 'yes'):
                             score1 = 2.4
                         else:
-                            if data['house_deer'] == "Yes":
+                            if data['house_deer'] == "yes":
                                 score1 = 2.4
                             else:
-                                if data['house_proximity_wooded_area'] == "Yes":
+                                if data['house_proximity_wooded_area'] == "yes":
                                     score1 = 2.4
                                 else :
                                     score1 = 1.5
                     else:
-                        if data['house_proximity_wooded_area'] == "Yes":
+                        if data['house_proximity_wooded_area'] == "yes":
                             score1 = 2.4
                         else:
                             score1 = 1.5
@@ -665,11 +665,11 @@ def calculat_score_and_record_answers(data):
                         and (data['How_many_embedded_in_your_skin'] != "0")):
                     score1 = 1.5
                 else:
-                    if data['access_courtyard'] == "Yes" :
-                        if data['house_deer'] == "Yes":
+                    if data['access_courtyard'] == "yes" :
+                        if data['house_deer'] == "yes":
                             score1 = 1.5
                         else:
-                            if data['house_proximity_wooded_area'] == "Yes":
+                            if data['house_proximity_wooded_area'] == "yes":
                                 score1 = 1.5
     except :
         pass
@@ -825,19 +825,19 @@ def calculat_score_and_record_answers(data):
 #                                 and data['How_many_freely_moving_on_your_skin'] != "0":
 #                             score1 = 2.4
 #             else:
-#                 if data['access_courtyard'] == "Yes" :
-#                     if(data['courtyard_herbaceous_or_forest'] == 'Yes'):
+#                 if data['access_courtyard'] == "yes" :
+#                     if(data['courtyard_herbaceous_or_forest'] == 'yes'):
 #                         score1 = 2.4
 #                     else:
-#                         if data['house_deer'] == "Yes":
+#                         if data['house_deer'] == "yes":
 #                             score1 = 2.4
 #                         else:
-#                             if data['house_proximity_wooded_area'] == "Yes":
+#                             if data['house_proximity_wooded_area'] == "yes":
 #                                 score1 = 2.4
 #                             else :
 #                                 score1 = 1.5
 #                 else:
-#                     if data['house_proximity_wooded_area'] == "Yes":
+#                     if data['house_proximity_wooded_area'] == "yes":
 #                         score1 = 2.4
 #                     else:
 #                         score1 = 1.5
@@ -847,11 +847,11 @@ def calculat_score_and_record_answers(data):
 #                     and (data['How_many_embedded_in_your_skin'] != "0")):
 #                 score1 = 1.5
 #             else:
-#                 if data['access_courtyard'] == "Yes" :
-#                     if data['house_deer'] == "Yes":
+#                 if data['access_courtyard'] == "yes" :
+#                     if data['house_deer'] == "yes":
 #                         score1 = 1.5
 #                     else:
-#                         if data['house_proximity_wooded_area'] == "Yes":
+#                         if data['house_proximity_wooded_area'] == "yes":
 #                             score1 = 1.5
 #         #elif risk not found !
 #     ######
